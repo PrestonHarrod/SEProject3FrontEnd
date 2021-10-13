@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Course Home</h1>
-    <button @click="$router.push('/api/courses/courseadd')">Add Course</button>
+    <button @click="viewAddPage()">Add Course</button>
     <button @click="getNextPage(--index)">Prev</button>
     <button @click="getNextPage(++index)">Next</button>
 
@@ -67,15 +67,10 @@ export default {
         })
     },
     async doDelete(courses, id) {
-            const ok = await this.$refs.confirmDialog.show({
-                title: 'Delete Course',
-                message: 'Are you sure you want to delete this course? It cannot be undone.',
-                okButton: 'Delete Forever',
-            })
-            // If you throw an error, the method will terminate here unless you surround it wil try/catch
-            if (ok) {
+            if(confirm("Do you really want to delete?")){
+
                 courseServices.deleteCourse(id)
-      .then(() => {
+                .then(() => {
         this.courses.forEach((course,i) => {
           if (course.courseID == id) {
             this.courses.splice(i, 1);
@@ -83,9 +78,10 @@ export default {
         })
 
         })
-            } else {
-                alert('You chose not to delete this course. Doing nothing now.')
-            }
+                .catch(error => {
+                    console.log(error);
+                })
+   }
       },
       getNextPage(num){
       if (num < 0) //dont allow index more less than 0
@@ -103,6 +99,16 @@ export default {
         console.log('There was an error:', error.response)
         })
     },
+    viewAddPage() {
+       this.$router.push({ name: 'add'})
+        .then(() => {
+          
+        })
+        .catch(error => {
+         console.log(error)
+        })
+
+    }
       },
 
   }

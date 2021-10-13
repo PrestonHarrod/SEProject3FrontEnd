@@ -6,30 +6,42 @@
       <table class="center">
       <tr>
       <td style="height: 30px; width: 80px; display: inline-block">  Department: </td>    
-      <td style="height: 30px; display: inline-block" > <input v-model="course.Dept" type="text" id="courseDept"> </td>    
+      <td style="height: 30px; display: inline-block" > <input v-model="course.dept" type="text" id="courseDept"> </td>    
       </tr>
       <tr>
       <td style="height: 30px; width: 80px; display: inline-block"> Course Number: </td>
-      <td style="height: 30px;  display: inline-block"><input v-model="course['Course Number']" type="text" id="courseNumber"> </td>
+      <td style="height: 30px;  display: inline-block"><input v-model="course.courseNum" type="text" id="courseNumber"> </td>
       </tr>
       <tr>
       <td style="height: 30px; width: 80px; display: inline-block"> Level: </td>
-      <td style="height: 30px;  display: inline-block"> <input v-model="course.Level" type="text" id="courseLevel"> </td> 
+      <td style="height: 30px;  display: inline-block"> <input v-model="course.level" type="text" id="courseLevel"> </td> 
       </tr>
       <tr>
       <td style="height: 30px; width: 80px; display: inline-block"> Hours: </td>
-      <td style="height: 30px;  display: inline-block"> <input v-model="course.Hours" type="text" id="courseHours"> </td>
+      <td style="height: 30px;  display: inline-block"> <input v-model="course.hours" type="text" id="courseHours"> </td>
       </tr>
       <tr>
       <td style="height: 30px; width: 80px; display: inline-block"> Course Name: </td>
-      <td style="height: 30px; display: inline-block"> <input v-model="course.Name" type="text" id="courseName"> </td>
+      <td style="height: 30px; display: inline-block"> <input v-model="course.name" type="text" id="courseName"> </td>
       </tr>
       <tr>
       <td style="width: 80px; display: inline-block"> Description: </td>
       <br>
-      <textarea v-model="course.Description" type="text" style='height:80px; width:500px; white-space: pre-line;' id="courseDescription"></textarea> 
+      <textarea v-model="course.desc" type="text" style='height:80px; width:500px; white-space: pre-line;' id="courseDescription"></textarea> 
       </tr>
       <br> <br>
+      <tr>
+      <td style="height: 30px; width: 80px; display: inline-block"> SemesterID: </td>
+      <td style="height: 30px;  display: inline-block"> <input v-model="course.semesterID" type="text" id="courseHours"> </td>
+      </tr>
+      <tr>
+      <td style="height: 30px; width: 80px; display: inline-block"> Created At: </td>
+      <td style="height: 30px;  display: inline-block"> <input v-model="course.createdAt" type="text" id="courseHours"> </td>
+      </tr>
+      <tr>
+      <td style="height: 30px; width: 80px; display: inline-block"> Updated At: </td>
+      <td style="height: 30px;  display: inline-block"> <input v-model="course.updatedAt" type="text" id="courseHours"> </td>
+      </tr>
       <tr>
       <input type="submit" name="submit" v-on:click.prevent="updateCourse(course)" >
       <button name="cancel" v-on:click.prevent="cancel()">Cancel</button>
@@ -56,7 +68,7 @@ export default {
   created() {
       courseServices.getCourse(this.id)
       .then(response => {
-        this.course = response.data[0];
+        this.course = response.data;
       })
       .catch(error => {
         console.log('There was an error:', error.response)
@@ -75,6 +87,7 @@ export default {
         })
         .catch(error => {
         console.log('There was an error:', error.response)
+        console.log(this.id)
         })
         
     },
