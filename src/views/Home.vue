@@ -19,12 +19,12 @@
             </thead>
             <tbody>
                 <tr v-for="course in courses" :key="course.id" :course="course">
-                    <td>{{course.Name}}</td>
-                    <td>{{course.Hours}}</td>
-                    <td>{{course["Course Number"]}}</td>
+                    <td>{{course.name}}</td>
+                    <td>{{course.hours}}</td>
+                    <td>{{course.courseNum}}</td>
 
                     <button name="view" v-on:click.prevent="viewCourse(course)">View Course</button>
-                    <button class="delete-btn" @click="doDelete(courses, course.id)">
+                    <button class="delete-btn" @click="doDelete(courses, course.courseID)">
             Delete
           </button>
           <confirm-dialog ref="confirmDialog"></confirm-dialog>
@@ -58,8 +58,9 @@ export default {
   },
   methods: {
    viewCourse(course) {
-          this.$router.push({ name: 'view', params: {id: course.id}})
+          this.$router.push({ name: 'view', params: {id: course.courseID}})
         .then(() => {
+          console.log(course.courseID)
         })
         .catch(error => {
          console.log(error)
@@ -76,7 +77,7 @@ export default {
                 courseServices.deleteCourse(id)
       .then(() => {
         this.courses.forEach((course,i) => {
-          if (course.id == id) {
+          if (course.courseID == id) {
             this.courses.splice(i, 1);
           }
         })
