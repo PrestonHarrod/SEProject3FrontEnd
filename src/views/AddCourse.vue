@@ -1,43 +1,19 @@
 <template>
-  <div>
-    <H1 style="background-color: #811429; color:#f2f2f2">Add Course</H1>
-  
-
-    <form @submit.prevent="addCourse">
-      <table class="center">
-      <tr>
-      <td style="height: 30px; width: 80px; display: inline-block">  Department: </td>    
-      <td style="height: 30px; display: inline-block" > <input v-model="course.Dept" type="text" id="courseDept"> </td>    
-      </tr>
-      <tr>
-      <td style="height: 30px; width: 80px; display: inline-block"> Course Number: </td>
-      <td style="height: 30px;  display: inline-block"><input v-model="course['Course Number']" type="text" id="courseNumber"> </td>
-      </tr>
-      <tr>
-      <td style="height: 30px; width: 80px; display: inline-block"> Level: </td>
-      <td style="height: 30px;  display: inline-block"> <input v-model="course.Level" type="text" id="courseLevel"> </td> 
-      </tr>
-      <tr>
-      <td style="height: 30px; width: 80px; display: inline-block"> Hours: </td>
-      <td style="height: 30px;  display: inline-block"> <input v-model="course.Hours" type="text" id="courseHours"> </td>
-      </tr>
-      <tr>
-      <td style="height: 30px; width: 80px; display: inline-block"> Course Name: </td>
-      <td style="height: 30px; display: inline-block"> <input v-model="course.Name" type="text" id="courseName"> </td>
-      </tr>
-      <tr>
-      <td style="width: 80px; display: inline-block"> Description: </td>
-      <br>
-      <textarea v-model="course.Description" type="text" style='height:80px; width:500px; white-space: pre-line;' id="courseDescription"></textarea> 
-      </tr>
-      <br> <br>
-      <tr>
-      <button name="submit" v-on:click.prevent="addCourse()">Submit</button>
-      <button name="cancel" v-on:click.prevent="cancel()">Cancel</button>
-      </tr>
-      </table>
-    </form>
-  </div>
+<div>
+<H1 style="background-color: #811429; color:#f2f2f2">Add Course</H1>
+<v-form>
+        <v-col>
+           <v-text-field label="Dept" v-model="course.Dept" type="text" id="courseDept"/>
+            <v-text-field label="Number" v-model="course['Course Number']" type="text" id="courseNumber"/>
+            <v-text-field label="Name" v-model="course.Name" type="text" id="courseName" />
+            <v-text-field label="Hours" v-model="course.Hours" type="text" id="courseHours"/>
+            <v-text-field label="Level" v-model="course.Level" type="text" id="courseLevel"/>
+             <v-textarea label="Description" v-model="course.Description" type="text" id="courseDescription" />
+       </v-col>
+      <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="addCourse()" text rounded>Submit</v-btn>
+      <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
+    </v-form>
+</div>
 </template>
 
 <script>

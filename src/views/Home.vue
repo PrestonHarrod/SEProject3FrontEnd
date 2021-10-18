@@ -1,20 +1,29 @@
 <template>
+<v-container fluid fill-height> <!--fluid fill-height-->
   <div>
-    <h1>Course Home</h1>
-    <button @click="$router.push('/api/courses/courseadd')">Add Course</button>
-    <button @click="getNextPage(--index)">Prev</button>
-    <button @click="getNextPage(++index)">Next</button>
-
-
-         <table class="center">
-
+    <H1 style="background-color: #811429; color:#f2f2f2">Course List</H1>
+    <br>
+    <br>
+     <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Course</v-btn></h2>
+  <br>
+  <br>
+   <v-pagination
+      v-model="page"
+      :length="62"
+      :total-visible="12"
+      @input="next"
+    ></v-pagination>
+  
+    <v-card width="100vw">
+         <v-simple-table height="1000px" fixed-header>
+          <template v-slot:default>   
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Course Name</th>
                     <th>Hours</th>
-                    <th>Course Number</th>
+                    <th>Number</th>
                     <th>View Course</th>
-                     <th>Delete</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,17 +31,18 @@
                     <td>{{course.Name}}</td>
                     <td>{{course.Hours}}</td>
                     <td>{{course["Course Number"]}}</td>
-
-                    <button name="view" v-on:click.prevent="viewCourse(course)">View Course</button>
-                    <button class="delete-btn" @click="doDelete(courses, course.id)">
-            Delete
-          </button>
-          <confirm-dialog ref="confirmDialog"></confirm-dialog>
+                    <td><v-btn color="#66BB6A" @click="viewCourse(course)">View Course</v-btn></td>
+                    <td><v-btn color="#E53935" @click="doDelete(courses, course.id)">Delete</v-btn></td>       
+                    <confirm-dialog ref="confirmDialog"></confirm-dialog>
                 </tr>
             </tbody>
-        </table>
+            </template>
+        </v-simple-table>
+    </v-card>
   </div>
+</v-container>
 </template>
+
 
 <script>
 //import CourseListDisplay from '@/components/CourseListDisplay.vue'
@@ -43,7 +53,7 @@ export default {
     data() {
         return {
             courses: {},
-            index: 0
+            page: 1
         };
     },
   created() {
@@ -57,6 +67,26 @@ export default {
       })
   },
   methods: {
+    next (page) {
+  
+  courseServices.getCourses(page * 50)
+    .then(response => {
+      
+      this.courses = response.data
+      console.log(this.page)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+},
+  goToAdd() {
+    this.$router.push({ name: 'add'})
+    .then(() => {
+        })
+        .catch(error => {
+         console.log(error)
+        })
+  },
    viewCourse(course) {
           this.$router.push({ name: 'view', params: {id: course.id}})
         .then(() => {
@@ -65,75 +95,36 @@ export default {
          console.log(error)
         })
     },
-    async doDelete(courses, id) {
-            const ok = await this.$refs.confirmDialog.show({
-                title: 'Delete Course',
-                message: 'Are you sure you want to delete this course? It cannot be undone.',
-                okButton: 'Delete Forever',
-            })
-            // If you throw an error, the method will terminate here unless you surround it wil try/catch
-            if (ok) {
+   async doDelete(courses, id) {
+            if(confirm("Do you really want to delete?")){
                 courseServices.deleteCourse(id)
-      .then(() => {
+                .then(() => {
         this.courses.forEach((course,i) => {
-          if (course.id == id) {
+          if (course.courseID == id) {
             this.courses.splice(i, 1);
           }
         })
-
         })
-            } else {
-                alert('You chose not to delete this course. Doing nothing now.')
-            }
+                .catch(error => {
+                    console.log(error);
+                })
+   }
       },
-      getNextPage(num){
-      if (num < 0) //dont allow index more less than 0
-      {
-        num = 0;
-        this.index = 0;
-      }
-      console.log("Number: " + num);
-      console.log("Index: " + this.index);
-      courseServices.getCourses(num * 50)
-      .then(response => {
-        this.courses = response.data
-        })
-        .catch(error => {
-        console.log('There was an error:', error.response)
-        })
-    },
+      
       },
 
   }
 </script>
 
 <style>
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-th,
-td {
-  text-align: left;
-  padding: 8px;
-}
-tr:nth-child(even) {
-  background-color: #f2f2f2;
+H1 {
+  text-align: center;
+  font-size: 3.5rem !important;
+  
 }
 th {
-  background-color: #811429;
-  color: white;
+  text-align: left;
+  font-size: 1.5rem !important;
 }
-.delete-btn {
-  margin-left: 100px;
-  padding: 0.5em 1em;
-  background-color: #eccfc9;
-  color: #c5391a;
-  border: 2px solid #ea3f1b;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 12px;
-  text-transform: uppercase;
-  cursor: pointer;
-}
+
 </style>
