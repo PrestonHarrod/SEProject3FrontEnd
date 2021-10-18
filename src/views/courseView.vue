@@ -46,7 +46,8 @@ export default {
   created() {
       courseServices.getCourse(this.id)
       .then(response => {
-        this.course = response.data
+        this.course = response.data,
+        console.log(this.course)
       })
       .catch(error => {
         console.log('There was an error:', error.response)
@@ -74,7 +75,7 @@ export default {
     },
 
     deleteCourse(id){
-    courseServices.deleteCourse(this.id, id)
+    courseServices.deleteCourse(id)
       .then(() => {
         this.courses.forEach((course,i) => {
           if (course.id == id) {
@@ -93,3 +94,4 @@ export default {
 </script>
 
 <style></style> 
+

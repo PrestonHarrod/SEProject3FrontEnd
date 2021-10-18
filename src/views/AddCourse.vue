@@ -11,7 +11,7 @@
       </tr>
       <tr>
       <td style="height: 30px; width: 80px; display: inline-block"> Course Number: </td>
-      <td style="height: 30px;  display: inline-block"><input v-model="course.courseNo" type="text" id="courseNumber"> </td>
+      <td style="height: 30px;  display: inline-block"><input v-model="course.courseNum" type="text" id="courseNumber"> </td>
       </tr>
       <tr>
       <td style="height: 30px; width: 80px; display: inline-block"> Level: </td>

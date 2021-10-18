@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Course Home</h1>
-    <button @click="viewAddPage()">Add Course</button>
+    <button @click="getAddPage()">Add Course</button>
     <button @click="getNextPage(--index)">Prev</button>
     <button @click="getNextPage(++index)">Next</button>
 
@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="course in courses" :key="course.id" :course="course">
+                <tr v-for="course in courses" :key="course.courseID" :course="course">
                     <td>{{course.name}}</td>
                     <td>{{course.hours}}</td>
                     <td>{{course.courseNum}}</td>
@@ -48,7 +48,7 @@ export default {
     },
   created() {
 
-      courseServices.getCourses(0) 
+      courseServices.getCourses() 
       .then(response => {
         this.courses = response.data
       })
@@ -68,7 +68,6 @@ export default {
     },
     async doDelete(courses, id) {
             if(confirm("Do you really want to delete?")){
-
                 courseServices.deleteCourse(id)
                 .then(() => {
         this.courses.forEach((course,i) => {
@@ -76,7 +75,6 @@ export default {
             this.courses.splice(i, 1);
           }
         })
-
         })
                 .catch(error => {
                     console.log(error);
@@ -99,15 +97,14 @@ export default {
         console.log('There was an error:', error.response)
         })
     },
-    viewAddPage() {
-       this.$router.push({ name: 'add'})
-        .then(() => {
-          
-        })
-        .catch(error => {
-         console.log(error)
-        })
-
+    getAddPage() {
+      this.$router.push({name:'add'})
+      .then(()=> {
+        console.log('routing to add course page');
+      })
+      .catch(error => {
+        console.log(error);
+      })
     }
       },
 

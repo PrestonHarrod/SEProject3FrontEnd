@@ -35,14 +35,6 @@
       <td style="height: 30px;  display: inline-block"> <input v-model="course.semesterID" type="text" id="courseHours"> </td>
       </tr>
       <tr>
-      <td style="height: 30px; width: 80px; display: inline-block"> Created At: </td>
-      <td style="height: 30px;  display: inline-block"> <input v-model="course.createdAt" type="text" id="courseHours"> </td>
-      </tr>
-      <tr>
-      <td style="height: 30px; width: 80px; display: inline-block"> Updated At: </td>
-      <td style="height: 30px;  display: inline-block"> <input v-model="course.updatedAt" type="text" id="courseHours"> </td>
-      </tr>
-      <tr>
       <input type="submit" name="submit" v-on:click.prevent="updateCourse(course)" >
       <button name="cancel" v-on:click.prevent="cancel()">Cancel</button>
       </tr>
