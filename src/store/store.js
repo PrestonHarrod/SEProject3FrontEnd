@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { setStore, getStore } from '@/config/utils'
+import utils from '@/config/utils'
 
 Vue.use(Vuex)
 
-const user = getStore('user')
+const user = utils.getStore('user')
 
 export default new Vuex.Store({
   state: {
@@ -13,7 +13,7 @@ export default new Vuex.Store({
   mutations: {
     setLoginUser(state, user) {
       state.loginUser = user
-      setStore('user', user)
+      utils.setStore('user', user)
     }
   },
   actions: {

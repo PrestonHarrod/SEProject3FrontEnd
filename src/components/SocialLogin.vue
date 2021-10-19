@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import router from '@/router/router'
+import router from 'vue-router'
 export default {
   name: 'login_signup_social',
   mounted () {
-    initFbsdk()
+    //initFbsdk()
   },
   methods: {
     loginWithGoogle () {

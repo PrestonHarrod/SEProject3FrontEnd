@@ -1,18 +1,25 @@
 
 import Vue from 'vue'
 import Router from 'vue-router'
-import CourseList from './views/Home.vue'
+import CourseList from './views/CourseList.vue'
 import CourseView from './views/courseView.vue'
 import CourseAdd from './views/AddCourse.vue'
 import CourseEdit from './views/EditCourse.vue'
+import Home from './views/Home.vue'
 Vue.use(Router)
 export default new Router({
   mode: 'history',
   base:
   process.env.NODE_ENV === "development" ? "/" : "/courses/",
   routes : [
+    
     {
       path: '/',
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/api/courses',
       name: 'list',
       component: CourseList
     },

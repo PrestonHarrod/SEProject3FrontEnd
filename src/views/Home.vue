@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import router from '@/router/router'
 export default {
   name: 'login_signup_social',
   methods: {
@@ -23,7 +22,7 @@ export default {
             google: GoogleUser
           }
           this.$store.commit('setLoginUser', userInfo)
-          router.push('/home')
+           this.$router.push({name: 'list'})
         })
         .catch(error => {
           console.log('error', error)

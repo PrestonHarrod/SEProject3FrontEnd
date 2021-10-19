@@ -48,7 +48,7 @@ export default {
     },
   created() {
 
-      courseServices.getCourses() 
+      courseServices.getCourses(this.index) 
       .then(response => {
         this.courses = response.data
       })
