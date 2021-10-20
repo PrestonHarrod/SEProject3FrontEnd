@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <H1 style="background-color: #811429; color:#f2f2f2">Edit Course</H1>

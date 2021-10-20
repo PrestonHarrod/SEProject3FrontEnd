@@ -1,3 +1,4 @@
+
 <template>
   <div class="signup-buttons">
     <a href="#" class="google-signup" @click.prevent="loginWithGoogle">
