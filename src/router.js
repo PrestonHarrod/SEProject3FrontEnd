@@ -1,6 +1,9 @@
 
 import Vue from 'vue'
 import Router from 'vue-router'
+import DegreeList from './views/DegreeList.vue'
+import StudentList from './views/StudentList.vue'
+import AdvisorList from './views/AdvisorList.vue'
 import CourseList from './views/CourseList.vue'
 import CourseView from './views/courseView.vue'
 import CourseAdd from './views/AddCourse.vue'
@@ -19,8 +22,23 @@ export default new Router({
       component: Home
     },
     {
+      path: '/api/students',
+      name: 'students',
+      component: StudentList
+    },
+    {
+      path: '/api/advisors',
+      name: 'advisors',
+      component: AdvisorList
+    },
+    {
+      path: '/api/degree',
+      name: 'degrees',
+      component: DegreeList
+    },
+    {
       path: '/api/courses',
-      name: 'list',
+      name: 'courses',
       component: CourseList
     },
     {

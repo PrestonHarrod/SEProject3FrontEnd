@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>Courses</h1>
-    <button @click="getAddPage()">Add Course</button>
+    <h1>Students</h1>
+    <button @click="getAddPage()">Add Student</button>
     <button @click="getNextPage(--index)">Prev</button>
     <button @click="getNextPage(++index)">Next</button>
 
@@ -10,21 +10,22 @@
 
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Hours</th>
-                    <th>Course Number</th>
-                    <th>View Course</th>
-                     <th>Delete</th>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Major</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="course in courses" :key="course.courseID" :course="course">
-                    <td>{{course.name}}</td>
-                    <td>{{course.hours}}</td>
-                    <td>{{course.courseNum}}</td>
-
-                    <button name="view" v-on:click.prevent="viewCourse(course)">View Course</button>
-                    <button class="delete-btn" @click="doDelete(courses, course.courseID)">
+                <tr v-for="student in students" :key="student.studentID" :student="student">
+                    <td>{{student.studentID}}</td>
+                    <td>{{student.fName}}</td>
+                    <td>{{student.lName}}</td>
+                    <td>{{student.email}}</td>
+                    <td>{{student.major}}</td>
+                    <button name="view" v-on:click.prevent="viewStudent(student)">View Student</button>
+                    <button class="delete-btn" @click="doDelete(students, student.studentID)">
             Delete
           </button>
           <confirm-dialog ref="confirmDialog"></confirm-dialog>
@@ -34,45 +35,44 @@
   </div>
 </template>
 
-<script>
-//import CourseListDisplay from '@/components/CourseListDisplay.vue'
-import courseServices from '@/services/courseServices.js'
+<script>  
+import studentServices from '@/services/studentServices.js'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
 export default {
     components: {ConfirmDialog},
     data() {
         return {
-            courses: {},
+            students: {},
             index: 0
         };
     },
   created() {
 
-      courseServices.getCourses(this.index) 
+      studentServices.getStudents(this.index) 
       .then(response => {
-        this.courses = response.data
+        this.students = response.data
       })
       .catch(error => {
         console.log(error)
       })
   },
   methods: {
-   viewCourse(course) {
-          this.$router.push({ name: 'view', params: {id: course.courseID}})
+   viewStudent(student) {
+          this.$router.push({ name: 'view', params: {id: student.studentID}})
         .then(() => {
-          console.log(course.courseID)
+          console.log(student.studentID)
         })
         .catch(error => {
          console.log(error)
         })
     },
-    async doDelete(courses, id) {
+    async doDelete(students, id) {
             if(confirm("Do you really want to delete?")){
-                courseServices.deleteCourse(id)
+                studentServices.deleteStudent(id)
                 .then(() => {
-        this.courses.forEach((course,i) => {
-          if (course.courseID == id) {
-            this.courses.splice(i, 1);
+        this.students.forEach((student,i) => {
+          if (student.studentID == id) {
+            this.students.splice(i, 1);
           }
         })
         })
@@ -89,9 +89,9 @@ export default {
       }
       console.log("Number: " + num);
       console.log("Index: " + this.index);
-      courseServices.getCourses(num * 50)
+      studentServices.getStudents(num * 50)
       .then(response => {
-        this.courses = response.data
+        this.students = response.data
         })
         .catch(error => {
         console.log('There was an error:', error.response)
@@ -100,7 +100,7 @@ export default {
     getAddPage() {
       this.$router.push({name:'add'})
       .then(()=> {
-        console.log('routing to add course page');
+        console.log('routing to add student page');
       })
       .catch(error => {
         console.log(error);

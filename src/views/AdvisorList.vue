@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Courses</h1>
+    <h1>Advisors</h1>
     <button @click="getAddPage()">Add Course</button>
     <button @click="getNextPage(--index)">Prev</button>
     <button @click="getNextPage(++index)">Next</button>
