@@ -12,7 +12,7 @@ export default {
     return apiClient.post("advisors/", advisor);
   },
   updateAdvisor(advisor) {
-    return apiClient.put("advisors/" + advisor.id, advisor);
+    return apiClient.put("advisors/" + advisor.advisorID, advisor);
   },
   deleteAdvisor(id) {
     return apiClient.delete("advisors/" + id);

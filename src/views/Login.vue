@@ -2,8 +2,7 @@
   <v-container>
         <v-row>
             <v-col>
-              <h2> Sign In with Google</h2>
-              <SocialLogin />
+              <SocialLogin/>
             </v-col>
         </v-row>
     </v-container>

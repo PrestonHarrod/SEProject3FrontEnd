@@ -21,8 +21,7 @@ export default {
   data() {
         return {
             
-            message: 'Click to Login with OC Credentials',
-            roles : [{role:"Admin"},{role:"Advisor"},{role:"Student"}]
+            message: 'Click to Login',
         };
     },
   methods: {

@@ -2,9 +2,8 @@
     <v-container>
         <v-row>
             <v-col>
-                <H1>Course Plan</H1>               
-                <h2 v-if=user>Hello, {{user.user}}</h2>    
-                <h2 v-if=!user>Please Login</h2>        
+                <Nav/>              
+                <p v-if=user>Welcome, {{user.user}}</p>          
             </v-col>
         </v-row>
     </v-container>
@@ -24,23 +23,19 @@ export default {
     },
     async created()  {
         this.user = Utils.getStore('user');
-        document.title = "OC Course Plan"
         console.log("advisorId="+this.user.advisorID+" studentId="+this.user.studentID)
-        if(this.user != null && this.user.advisorID != null) {
+        if (this.user != null && this.user.advisorID != null) {
           await AdvisorServices.getAdvisor(this.user.advisorID)
-          .catch(() => {
-            console.log("no admin login");
-            Utils.setStore("user",null);
-            this.$router.push({ name: 'main' });
-                   
+            .catch(() => {
+                Utils.setStore("user",null);
+                this.$router.push({ name: 'home' });
             });
         } else {
-            if(this.user != null && this.user.studentID != null){
+            if (this.user != null && this.user.studentID != null){
               await StudentServices.getStudent(this.user.studentID)
                 .catch(() => {
-                  console.log("no student login");
                   Utils.setStore("user",null);
-                  this.$router.push({ name: 'main' });
+                  this.$router.push({ name: 'home' });
               });
           }
         }
