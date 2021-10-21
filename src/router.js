@@ -6,6 +6,7 @@ import CourseView from './views/courseView.vue'
 import CourseAdd from './views/AddCourse.vue'
 import CourseEdit from './views/EditCourse.vue'
 import Home from './views/Home.vue'
+import Login from './views/Login.vue'
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -17,6 +18,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
     },
     {
       path: '/api/courses',

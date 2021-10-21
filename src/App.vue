@@ -3,8 +3,8 @@
   <v-app>
 
     <v-main>
-      <Nav/>
       <router-view/>
+      <Nav/>
     </v-main>
   </v-app>
 </template>
