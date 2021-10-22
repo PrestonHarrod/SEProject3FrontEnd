@@ -58,7 +58,7 @@ export default {
   },
   methods: {
    viewStudent(student) {
-          this.$router.push({ name: 'view', params: {id: student.studentID}})
+          this.$router.push({ name: 'stuview', params: {id: student.studentID}})
         .then(() => {
           console.log(student.studentID)
         })
