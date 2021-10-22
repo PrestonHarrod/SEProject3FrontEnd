@@ -7,12 +7,12 @@
    </h3>
   <v-form>
         <v-col>
-           <v-text-field label="Dept" v-model="course.Dept" type="text" id="courseDept"/>
-            <v-text-field label="Number" v-model="course['Course Number']" type="text" id="courseNumber"/>
-            <v-text-field label="Name" v-model="course.Name" type="text" id="courseName" />
-            <v-text-field label="Hours" v-model="course.Hours" type="text" id="courseHours"/>
-            <v-text-field label="Level" v-model="course.Level" type="text" id="courseLevel"/>
-             <v-textarea label="Description" v-model="course.Description" type="text" id="courseDescription" />
+            <v-text-field readonly label="Course Number" v-model="course.courseNum" type="text" id="courseNum"/>
+            <v-text-field readonly label="Course Name" v-model="course.name" type="text" id="courseNum"/>
+            <v-text-field readonly label="Department" v-model="course.dept" type="text" id="dept" />
+            <v-text-field readonly label="Hours" v-model="course.hours" type="text" id="hours"/>
+            <v-text-field readonly label="Level" v-model="course.level" type="text" id="level"/>
+            <v-textarea readonly label="Description" v-model="course.desc" type="text" id="desc" />
        </v-col>
     </v-form>
 
@@ -33,7 +33,7 @@ export default {
   created() {
       courseServices.getCourse(this.id)
       .then(response => {
-        this.course = response.data[0],
+        this.course = response.data,
         console.log(this.course)
       })
       .catch(error => {
@@ -50,7 +50,7 @@ export default {
       this.addCourseDisplay = true;
     },
     updateCourse(course) {
-          this.$router.push({ name: 'edit', params: {id: course.id}})
+          this.$router.push({ name: 'edit', params: {id: course.courseID}})
         .then(() => {
         })
         .catch(error => {
@@ -62,7 +62,7 @@ export default {
     },
 
     deleteCourse(id){
-    courseServices.deleteCourse(this.id, id)
+    courseServices.deleteCourse(id)
       .then(() => {
         this.courses.forEach((course,i) => {
           if (course.id == id) {

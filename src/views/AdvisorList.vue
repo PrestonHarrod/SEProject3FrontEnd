@@ -1,11 +1,11 @@
 <template>
 <v-container fluid fill-height> <!--fluid fill-height-->
   <div>
-    <H1 style="background-color: #811429; color:#f2f2f2">Course List</H1>
+    <H1 style="background-color: #811429; color:#f2f2f2">Advisor List</H1>
     <br>
     <br>
-     <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Course</v-btn></h2>
-  <br>
+     <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Advisor</v-btn></h2>
+ 
   <br>
    <v-pagination
       v-model="page"
@@ -13,26 +13,28 @@
       :total-visible="12"
       @input="next"
     ></v-pagination>
-  
+   <br>
     <v-card width="100vw">
          <v-simple-table height="1000px" fixed-header>
           <template v-slot:default>   
             <thead>
                 <tr>
-                    <th>Course Name</th>
-                    <th>Hours</th>
-                    <th>Number</th>
-                    <th>View Course</th>
-                    <th>Delete</th>
+                    <th>Advisor ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>View Advisor</th>
+                    <th>Email</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="course in courses" :key="course.id" :course="course">
-                    <td>{{course.Name}}</td>
-                    <td>{{course.Hours}}</td>
-                    <td>{{course["Course Number"]}}</td>
-                    <td><v-btn color="#66BB6A" @click="viewCourse(course)">View Course</v-btn></td>
-                    <td><v-btn color="#E53935" @click="doDelete(courses, course.id)">Delete</v-btn></td>       
+                <tr v-for="advisor in advisors" :key="advisor.advisorID" :advisor="advisors">
+                    <td>{{advisor.advisorID}}</td>
+                    <td>{{advisor.fName}}</td>
+                    <td>{{advisor.lName}}</td>
+                    <td>{{advisor.email}}</td>
+                    <td><v-btn color="#66BB6A" @click="viewAdvisor(advisor)">Details</v-btn></td>
+                    <td><v-btn color="#E53935" @click="doDelete(advisors, advisor.advisorID)">Delete</v-btn></td>       
                     <confirm-dialog ref="confirmDialog"></confirm-dialog>
                 </tr>
             </tbody>
@@ -52,15 +54,15 @@ export default {
     components: {ConfirmDialog},
     data() {
         return {
-            courses: {},
+            advisors: {},
             page: 1
         };
     },
   created() {
 
-      courseServices.getCourses(0) 
+      courseServices.getAdvisors(this.page) 
       .then(response => {
-        this.courses = response.data
+        this.advisors = response.data
       })
       .catch(error => {
         console.log(error)
@@ -69,10 +71,10 @@ export default {
   methods: {
     next (page) {
   
-  courseServices.getCourses(page * 50)
+  courseServices.getAdvisors(page * 50)
     .then(response => {
       
-      this.courses = response.data
+      this.advisors = response.data
       console.log(this.page)
     })
     .catch(error => {
@@ -80,28 +82,29 @@ export default {
     })
 },
   goToAdd() {
-    this.$router.push({ name: 'add'})
+    this.$router.push({ name: 'addAdvisor'})
     .then(() => {
         })
         .catch(error => {
          console.log(error)
         })
   },
-   viewCourse(course) {
-          this.$router.push({ name: 'view', params: {id: course.id}})
+   viewAdvisor(advisor) {
+          this.$router.push({ name: 'viewAdvisor', params: {id: advisor.advisorID}})
         .then(() => {
         })
         .catch(error => {
          console.log(error)
         })
     },
-   async doDelete(courses, id) {
+   async doDelete(advisors, id) {
             if(confirm("Do you really want to delete?")){
-                courseServices.deleteCourse(id)
+              console.log(id)
+                courseServices.deleteAdvisor(id)
                 .then(() => {
-        this.courses.forEach((course,i) => {
-          if (course.courseID == id) {
-            this.courses.splice(i, 1);
+        this.advisors.forEach((advisor,i) => {
+          if (advisor.advisorID == id) {
+            this.advisors.splice(i, 1);
           }
         })
         })
