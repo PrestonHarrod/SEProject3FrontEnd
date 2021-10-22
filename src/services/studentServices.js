@@ -1,14 +1,15 @@
 import {apiClient} from "./apiClient.js";
-
 export default {
-  getStudents() {
-    return apiClient.get("students");
+  getStudents(index) {
+    return apiClient.get("students?index=" + index);
   },
+
 
   getStudent(id) {
     return apiClient.get("students/" + id);
   },
   addStudent(student) {
+
     return apiClient.post("students/", student);
   },
   updateStudent(student) {
@@ -18,4 +19,4 @@ export default {
     return apiClient.delete("students/" + id);
   }
 
-};
+}
