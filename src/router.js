@@ -1,64 +1,29 @@
-/*
-import {createRouter, createWebHistory} from 'vue-router'
-import CourseList from './views/Home.vue'
-import CourseView from './views/courseView.vue'
-import CourseAdd from './views/AddCourse.vue'
-import CourseEdit from './views/EditCourse.vue'
-
-  const routes = [
-    {
-      path: '/',
-      name: 'list',
-      component: CourseList
-    },
-    {
-      path: '/api/courses/:id',
-      name: 'view',
-      component: CourseView,
-      props: true
-    },
-    {
-        path: '/api/courses/courseadd',
-        name: 'add',
-        component: CourseAdd,
-        props: true
-      },
-      {
-        path: "/courses/course-edit/:id",
-        name: "edit",
-        component: CourseEdit,
-        props: true
-      },
-  ];
-  const router = createRouter({
-      history: createWebHistory(),
-      routes,
-  });
-export default router; 
-*/
 
 import Vue from 'vue'
 import Router from 'vue-router'
-import CourseList from './views/CourseList.vue'
-import CourseView from './views/courseView.vue'
-import CourseAdd from './views/AddCourse.vue'
-import CourseEdit from './views/EditCourse.vue'
-import StudentList from './views/StudentList.vue'
-import AddStudent from './views/AddStudent.vue'
-import AdvisorList from './views/AdvisorList.vue'
-import AddAdvisor from './views/AdvisorAdd.vue'
-import ViewStudent from './views/StudentView.vue'
-import ViewAdvisor from './views/AdvisorView.vue'
-import StudentEdit from './views/StudentEdit.vue'
-import AdvisorEdit from './views/AdvisorEdit.vue'
-import AddDegree from './views/DegreeAdd.vue'
-import ViewDegree from './views/DegreeView.vue'
-import DegreeEdit from './views/DegreeEdit.vue'
-import DegreeList from './views/DegreeList.vue'
-import SemesterList from './views/SemesterList.vue'
-import ViewSemester from './views/SemesterView.vue'
-import semesterEdit from './views/SemesterEdit.vue'
-import AddSemester from './views/SemesterAdd.vue'
+import Home from './views/Home.vue'
+import Login from './views/Login.vue'
+
+import CourseList from './views/Courses/CourseList.vue'
+import CourseView from './views/Courses/courseView.vue'
+import CourseAdd from './views/Courses/AddCourse.vue'
+import CourseEdit from './views/Courses/EditCourse.vue'
+import StudentList from './views/Students/StudentList.vue'
+import AddStudent from './views/Students/AddStudent.vue'
+import AdvisorList from './views/Advisors/AdvisorList.vue'
+import AddAdvisor from './views/Advisors/AdvisorAdd.vue'
+import ViewStudent from './views/Students/StudentView.vue'
+import ViewAdvisor from './views/Advisors/AdvisorView.vue'
+import StudentEdit from './views/Students/StudentEdit.vue'
+import AdvisorEdit from './views/Advisors/AdvisorEdit.vue'
+import AddDegree from './views/Degrees/DegreeAdd.vue'
+import ViewDegree from './views/Degrees/DegreeView.vue'
+import DegreeEdit from './views/Degrees/DegreeEdit.vue'
+import DegreeList from './views/Degrees/DegreeList.vue'
+import SemesterList from './views/Semesters/SemesterList.vue'
+import ViewSemester from './views/Semesters/SemesterView.vue'
+import semesterEdit from './views/Semesters/SemesterEdit.vue'
+import AddSemester from './views/Semesters/SemesterAdd.vue'
 
 Vue.use(Router)
 export default new Router({
@@ -66,9 +31,32 @@ export default new Router({
   base:
   process.env.NODE_ENV === "development" ? "/" : "/courses/",
   routes : [
+    
     {
       path: '/',
-      name: 'list',
+      name: 'home',
+      component: Home
+    },
+   
+   
+    {
+      path: '/api/advisors',
+      name: 'advisors',
+      component: AdvisorList
+    },
+    {
+      path: '/api/degree',
+      name: 'degrees',
+      component: DegreeList
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
+    },
+    {
+      path: '/api/courses',
+      name: 'courses',
       component: CourseList
     },
     {
