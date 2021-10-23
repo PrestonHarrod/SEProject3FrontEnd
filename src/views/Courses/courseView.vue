@@ -1,33 +1,20 @@
 <template>
   <div>
- <button name="cancel" v-on:click.prevent="cancel()">Go Back</button>
-
-<p></p>
-<button name="edit" v-on:click.prevent="updateCourse(course)">Edit</button>
-<p></p>
-   
-
-
- <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Hours</th>
-                    <th>Course Number</th>
-                    <th>Level</th>
-                    <th>Dept</th>
-                    <th>Course Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                    <td>{{course.name}}</td>
-                    <td>{{course.hours}}</td>
-                    <td>{{course.courseNum}}</td>
-                    <td>{{course.level}}</td>
-                    <td>{{course.dept}}</td>
-                    <td>{{course.desc}}</td>
-            </tbody>
-        </table>
+<H1 style="background-color: #811429; color:#f2f2f2">Course View</H1>
+<br>
+ <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
+    <h3><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateCourse(course)" text rounded>Edit</v-btn>
+   </h3>
+  <v-form>
+        <v-col>
+            <v-text-field readonly label="Course Number" v-model="course.courseNum" type="text" id="courseNum"/>
+            <v-text-field readonly label="Course Name" v-model="course.name" type="text" id="courseNum"/>
+            <v-text-field readonly label="Department" v-model="course.dept" type="text" id="dept" />
+            <v-text-field readonly label="Hours" v-model="course.hours" type="text" id="hours"/>
+            <v-text-field readonly label="Level" v-model="course.level" type="text" id="level"/>
+            <v-textarea readonly label="Description" v-model="course.desc" type="text" id="desc" />
+       </v-col>
+    </v-form>
 
   </div>
 </template>
@@ -93,5 +80,9 @@ export default {
 }
 </script>
 
-<style></style> 
-
+<style>
+th {
+  text-align: left;
+  font-size: 1.5rem !important;
+}
+</style> 
