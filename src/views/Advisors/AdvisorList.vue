@@ -24,8 +24,6 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
-                    <th>View Advisor</th>
-                    <th>Email</th>
                 </tr>
             </thead>
             <tbody>

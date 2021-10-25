@@ -21,6 +21,7 @@
             <thead>
                 <tr>
                     <th>Course Name</th>
+                    <th>Course number</th>
                     <th>Hours</th>
                     <th>Level</th>
                     <th></th>
@@ -30,6 +31,7 @@
             <tbody>
                 <tr v-for="course in courses" :key="course.courseID" :course="course">
                     <td>{{course.name}}</td>
+                    <td>{{course.courseNum}}</td>
                     <td>{{course.hours}}</td>
                     <td>{{course.level}}</td>
                     <td><v-btn color="#66BB6A" @click="viewCourse(course.courseID)">Details</v-btn></td>
