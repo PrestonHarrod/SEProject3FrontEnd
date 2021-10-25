@@ -13,11 +13,14 @@
 import Utils from '@/config/utils.js';
 import StudentServices from '@/services/studentServices.js';
 import AdvisorServices from '@/services/advisorServices.js';
+import Nav from '@/components/Nav.vue'
+
 
 export default {
 
     data() {
         return {
+            components: {Nav},
             user: {},
         };
     },
