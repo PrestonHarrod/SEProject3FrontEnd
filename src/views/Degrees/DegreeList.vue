@@ -19,7 +19,6 @@
           <template v-slot:default>   
             <thead>
                 <tr>
-                    <th>Degree ID</th>
                     <th>Dept</th>
                     <th>Degree</th>
                     <th>Hours</th>
@@ -27,7 +26,6 @@
             </thead>
             <tbody>
                 <tr v-for="degree in degrees" :key="degree.degreeID" :degree="degree">
-                    <td>{{degree.degreeID}}</td>
                     <td>{{degree.dept}}</td>
                     <td>{{degree.degree}}</td>
                     <td>{{degree.hours}}</td>
