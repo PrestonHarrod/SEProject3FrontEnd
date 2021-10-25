@@ -1,38 +1,48 @@
 <template>
+<v-container fluid fill-height> <!--fluid fill-height-->
   <div>
-    <h1>Courses</h1>
-    <button @click="getAddPage()">Add Course</button>
-    <button @click="getNextPage(--index)">Prev</button>
-    <button @click="getNextPage(++index)">Next</button>
-
-
-         <table class="center">
-
+    <H1 style="background-color: #811429; color:#f2f2f2">Course List</H1>
+    <br>
+    <br>
+     <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Student</v-btn></h2>
+  <br>
+  
+   <v-pagination
+      v-model="page"
+      :length="62"
+      :total-visible="12"
+      @input="next"
+    ></v-pagination>
+  <br>
+    <v-card width="100vw">
+         <v-simple-table height="1000px" fixed-header>
+          <template v-slot:default>   
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Course Name</th>
                     <th>Hours</th>
-                    <th>Course Number</th>
-                    <th>View Course</th>
-                     <th>Delete</th>
+                    <th>Level</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="course in courses" :key="course.courseID" :course="course">
                     <td>{{course.name}}</td>
                     <td>{{course.hours}}</td>
-                    <td>{{course.courseNum}}</td>
-
-                    <button name="view" v-on:click.prevent="viewCourse(course)">View Course</button>
-                    <button class="delete-btn" @click="doDelete(courses, course.courseID)">
-            Delete
-          </button>
-          <confirm-dialog ref="confirmDialog"></confirm-dialog>
+                    <td>{{course.level}}</td>
+                    <td><v-btn color="#66BB6A" @click="viewCourse(course.courseID)">Details</v-btn></td>
+                    <td><v-btn color="#E53935" @click="doDelete(courses, course.courseID)">Delete</v-btn></td>       
+                    <confirm-dialog ref="confirmDialog"></confirm-dialog>
                 </tr>
             </tbody>
-        </table>
+            </template>
+        </v-simple-table>
+    </v-card>
   </div>
+</v-container>
 </template>
+
 
 <script>
 //import CourseListDisplay from '@/components/CourseListDisplay.vue'
@@ -43,12 +53,12 @@ export default {
     data() {
         return {
             courses: {},
-            index: 0
+            page: 1
         };
     },
   created() {
 
-      courseServices.getCourses(this.index) 
+      courseServices.getCourses(this.page) 
       .then(response => {
         this.courses = response.data
       })
@@ -57,16 +67,36 @@ export default {
       })
   },
   methods: {
+    next (page) {
+  
+  courseServices.getCourses(page * 50)
+    .then(response => {
+      
+      this.courses = response.data
+      console.log(this.page)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+},
+  goToAdd() {
+    this.$router.push({ name: 'add'})
+    .then(() => {
+        })
+        .catch(error => {
+         console.log(error)
+        })
+  },
    viewCourse(course) {
-          this.$router.push({ name: 'view', params: {id: course.courseID}})
+     
+          this.$router.push({ name: 'view', params: {id: course}})
         .then(() => {
-          console.log(course.courseID)
         })
         .catch(error => {
          console.log(error)
         })
     },
-    async doDelete(courses, id) {
+   async doDelete(students, id) {
             if(confirm("Do you really want to delete?")){
                 courseServices.deleteCourse(id)
                 .then(() => {
@@ -81,63 +111,21 @@ export default {
                 })
    }
       },
-      getNextPage(num){
-      if (num < 0) //dont allow index more less than 0
-      {
-        num = 0;
-        this.index = 0;
-      }
-      console.log("Number: " + num);
-      console.log("Index: " + this.index);
-      courseServices.getCourses(num * 50)
-      .then(response => {
-        this.courses = response.data
-        })
-        .catch(error => {
-        console.log('There was an error:', error.response)
-        })
-    },
-    getAddPage() {
-      this.$router.push({name:'add'})
-      .then(()=> {
-        console.log('routing to add course page');
-      })
-      .catch(error => {
-        console.log(error);
-      })
-    }
+      
       },
 
   }
 </script>
 
 <style>
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-th,
-td {
-  text-align: left;
-  padding: 8px;
-}
-tr:nth-child(even) {
-  background-color: #f2f2f2;
+H1 {
+  text-align: center;
+  font-size: 3.5rem !important;
+  
 }
 th {
-  background-color: #811429;
-  color: white;
+  text-align: left;
+  font-size: 1.5rem !important;
 }
-.delete-btn {
-  margin-left: 100px;
-  padding: 0.5em 1em;
-  background-color: #eccfc9;
-  color: #c5391a;
-  border: 2px solid #ea3f1b;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 12px;
-  text-transform: uppercase;
-  cursor: pointer;
-}
+
 </style>

@@ -58,7 +58,7 @@ export default {
         })
     },
     cancel() {
-      this.$router.push({ name: 'list' })
+      this.$router.push({ name: 'courses' })
     },
 
     deleteCourse(id){
