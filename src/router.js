@@ -40,16 +40,6 @@ export default new Router({
    
    
     {
-      path: '/api/advisors',
-      name: 'advisors',
-      component: AdvisorList
-    },
-    {
-      path: '/api/degree',
-      name: 'degrees',
-      component: DegreeList
-    },
-    {
       path: '/login',
       name: 'login',
       component: Login,
