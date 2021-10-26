@@ -1,10 +1,11 @@
 <template>
 <v-container fluid fill-height> <!--fluid fill-height-->
   <div>
+    <Nav/>
     <H1 style="background-color: #811429; color:#f2f2f2">Course List</H1>
     <br>
     <br>
-     <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Student</v-btn></h2>
+     <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Course</v-btn></h2>
   <br>
   
    <v-pagination
@@ -20,6 +21,7 @@
             <thead>
                 <tr>
                     <th>Course Name</th>
+                    <th>Course number</th>
                     <th>Hours</th>
                     <th>Level</th>
                     <th></th>
@@ -29,6 +31,7 @@
             <tbody>
                 <tr v-for="course in courses" :key="course.courseID" :course="course">
                     <td>{{course.name}}</td>
+                    <td>{{course.courseNum}}</td>
                     <td>{{course.hours}}</td>
                     <td>{{course.level}}</td>
                     <td><v-btn color="#66BB6A" @click="viewCourse(course.courseID)">Details</v-btn></td>
@@ -48,8 +51,9 @@
 //import CourseListDisplay from '@/components/CourseListDisplay.vue'
 import courseServices from '@/services/courseServices.js'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import Nav from '@/components/Nav.vue'
 export default {
-    components: {ConfirmDialog},
+    components: {ConfirmDialog, Nav},
     data() {
         return {
             courses: {},

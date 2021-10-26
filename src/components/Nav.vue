@@ -13,7 +13,7 @@
     <v-btn text v-on:click.prevent="goToDegrees()">
       Degrees
     </v-btn>
-    <v-btn text>
+    <v-btn text v-on:click.prevent="goToSemesters()">
       Semesters
     </v-btn>
     <v-btn text>
@@ -36,7 +36,7 @@ export default ({
         })
       },    
       goToStudents() {
-          this.$router.push({ name: 'students'})
+          this.$router.push({ name: 'studentlist'})
         .then(() => {
         })
         .catch(error => {
@@ -44,7 +44,7 @@ export default ({
         })
       },
       goToAdvisors() {
-          this.$router.push({ name: 'advisors'})
+          this.$router.push({ name: 'advisorlist'})
         .then(() => {
         })
         .catch(error => {
@@ -52,7 +52,15 @@ export default ({
         })
       },
       goToDegrees() {
-          this.$router.push({ name: 'degrees'})
+          this.$router.push({ name: 'degreelist'})
+        .then(() => {
+        })
+        .catch(error => {
+         console.log(error)
+        })
+      },
+      goToSemesters() {
+          this.$router.push({ name: 'semesterlist'})
         .then(() => {
         })
         .catch(error => {

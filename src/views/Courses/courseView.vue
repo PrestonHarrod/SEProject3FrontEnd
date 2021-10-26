@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Nav/>
 <H1 style="background-color: #811429; color:#f2f2f2">Course View</H1>
 <br>
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>

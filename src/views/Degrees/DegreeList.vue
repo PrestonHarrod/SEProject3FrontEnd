@@ -1,6 +1,7 @@
 <template>
 <v-container fluid fill-height> <!--fluid fill-height-->
   <div>
+    <Nav/>
     <H1 style="background-color: #811429; color:#f2f2f2">Degree List</H1>
     <br>
     <br>
@@ -18,7 +19,6 @@
           <template v-slot:default>   
             <thead>
                 <tr>
-                    <th>Degree ID</th>
                     <th>Dept</th>
                     <th>Degree</th>
                     <th>Hours</th>
@@ -26,7 +26,6 @@
             </thead>
             <tbody>
                 <tr v-for="degree in degrees" :key="degree.degreeID" :degree="degree">
-                    <td>{{degree.degreeID}}</td>
                     <td>{{degree.dept}}</td>
                     <td>{{degree.degree}}</td>
                     <td>{{degree.hours}}</td>
@@ -47,8 +46,10 @@
 //import CourseListDisplay from '@/components/CourseListDisplay.vue'
 import courseServices from '@/services/courseServices.js'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import Nav from '@/components/Nav.vue'
+
 export default {
-    components: {ConfirmDialog},
+    components: {ConfirmDialog, Nav},
     data() {
         return {
             degrees: {},

@@ -1,7 +1,7 @@
 <template>
 <div>
 <H1 style="background-color: #811429; color:#f2f2f2">Semester Add</H1>
-
+ 
 <v-form>
         <v-col>
             <v-text-field label="Start Date" v-model="semester.startDate" type="text" id="startDate"/>

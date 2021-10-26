@@ -41,21 +41,6 @@ export default new Router({
    
    
     {
-      path: '/api/advisors',
-      name: 'advisors',
-      component: AdvisorList
-    },
-    {
-      path: '/api/degree',
-      name: 'degrees',
-      component: DegreeList
-    },
-    {
-      path: '/api/degreecourse/:id',
-      name: 'degreecourse',
-      component: DegreeCourse
-    },
-    {
       path: '/login',
       name: 'login',
       component: Login,
