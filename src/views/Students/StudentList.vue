@@ -33,7 +33,7 @@
                     <td>{{student.lName}}</td>
                     <td>{{student.email}}</td>
                     <td><v-btn color="#66BB6A" @click="viewStudent(student.studentID)">Details</v-btn></td>
-                    <td><v-btn color="#E53935" @click="doDelete(students, student.studentID)">Delete</v-btn></td>       
+                    <td><v-btn color="#E53935" @click="doDelete(students, student.studentID)">Delete</v-btn></td>      
                     <confirm-dialog ref="confirmDialog"></confirm-dialog>
                 </tr>
             </tbody>
@@ -99,6 +99,7 @@ export default {
          console.log(error)
         })
     },
+
    async doDelete(students, id) {
             if(confirm("Do you really want to delete?")){
                 courseServices.deleteStudent(id)
