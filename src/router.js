@@ -141,6 +141,12 @@ export default new Router({
         props: true
       },
       {
+        path: "/api/degreecourse/",
+        name: "degreecourse",
+        component: DegreeCourse,
+        props: true
+      },
+      {
         path: "/api/semesters",
         name: "semesterlist",
         component: SemesterList,
