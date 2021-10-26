@@ -77,4 +77,7 @@ export default {
   deleteSemester(semesterID) {
     return apiClient.delete("semesters/" + semesterID);
   },
+  getDegreeCourse() {
+    return apiClient.get('degreecourses/')
+  }
 };

@@ -13,7 +13,7 @@
            
        </v-col>
     </v-form>
-
+    <h3><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="courses(degree)" text rounded>View Courses in Degree</v-btn></h3>
   </div>
 </template>
 
@@ -44,6 +44,13 @@ export default {
   methods: {
     addForm(){
       this.viewDegreeDisplay = true;
+    },
+    courses() {
+      this.$router.push({name: 'degreecourse'})
+      .then(() => {})
+      .catch(error => {
+        console.log(error)
+      })
     },
     updateDegree(degree) {
           this.$router.push({ name: 'editdegree', params: {id: degree.degreeID}})
