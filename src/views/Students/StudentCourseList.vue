@@ -37,7 +37,7 @@ import StudentServices from '@/services/studentServices.js';
 import StudentCourseServices from '@/services/StudentCourseServices.js';
 //import courseServices from '@/services/courseServices.js'
 //import SemesterCourse from '@/components/SemesterCourse';
-//import DegreeCourseServices from '@/services/DegreeCourseServices.js';
+import DegreeCourseServices from '@/services/DegreeCourseServices.js';
 export default {
     components: {
         Nav
@@ -64,13 +64,43 @@ export default {
                 console.log("getStudent"+error)
                 console.log(error)
             });
-        await StudentCourseServices.getStudentCoursesForStudent(this.id)
-            .then(response=> {
-                this.studentCourses = response.data
-                console.log(response.data)
-            }).catch(error => {
-                console.log(error)
+            let semesters = [];
+        // await StudentCourseServices.getStudentCoursesForStudent(this.id)
+        //     .then(response=> {
+        //         this.studentCourses = response.data
+        //         console.log(response.data)
+        //     }).catch(error => {
+        //         console.log(error)
+            // })
+        await DegreeCourseServices.getDegreeCoursesForDegree(this.student.degreeId)
+            .then(response => {
+              let dc = response.data;
+              dc.forEach(degreeCourse => this.degreeCourses.push(degreeCourse.courseId));
             })
+            .catch(error => {
+                this.message = error.response.data.message;
+            });
+        await StudentCourseServices.getStudentCoursesForStudent(this.id) 
+            .then(response => {
+              this.studentCourses = response.data;
+              this.studentCourses.sort(function(a, b) {
+                  if (a.semester.startDate<b.semester.startDate) return -1;
+                  else if (a.semester.startDate<b.semester.startDate) return 1;
+                  return 0
+              }
+              );
+              
+              this.studentCourses.forEach(function (studentCourse) {
+                  if (!((semesters).includes(studentCourse.semester)))
+                    semesters.push(studentCourse.semester.code)
+                });
+              semesters.forEach(function (semester) {
+                this.semesterCourses.push(this.studentCourses.filter(studentCourse => studentCourse.semester==semester));
+              },this);
+            })
+            .catch(error => {
+                console.log(error)
+            });
                
         
           
