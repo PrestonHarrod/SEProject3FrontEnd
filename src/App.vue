@@ -4,7 +4,9 @@
   <v-layout>
       <v-flex>
         <div>
-          <Nav />
+          <div v-if= "isLogin()">
+          <Nav/>
+          </div>
           <router-view />
           
         </div>
@@ -20,6 +22,11 @@ export default {
   components: {
     Nav
   },
+  methods: {
+    isLogin() {
+     return this.$route.name != 'login';
+    }
+  }
 }
 </script>
 
