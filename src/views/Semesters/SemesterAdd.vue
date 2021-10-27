@@ -4,9 +4,9 @@
 
 <v-form>
         <v-col>
-            <v-text-field label="Start Date" v-model="semester.startDate" type="text" id="startDate"/>
-            <v-text-field label="End Date" v-model="semester.endDate" type="text" id="endDate" />
-            <v-text-field label="Season" v-model="semester.season" type="text" id="season"/>
+            <v-text-field label="Start Date" placeholder="2020/01/01" v-model="semester.startDate" type="text" id="startDate"/>
+            <v-text-field label="End Date" placeholder="2020/04/04" v-model="semester.endDate" type="text" id="endDate" />
+            <v-text-field label="Season" placeholder="Spring" v-model="semester.season" type="text" id="season"/>
        </v-col>
       <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="addSemester()" text rounded>Submit</v-btn>
       <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>

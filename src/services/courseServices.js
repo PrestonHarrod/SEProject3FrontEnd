@@ -1,12 +1,5 @@
 import {apiClient} from './apiClient.js'
 
-var baseurl = "";
-if (process.env.NODE_ENV === "development") {
-  baseurl = "http://localhost:8080/api/";
-} else {
-  baseurl = "/api/";
-}
-
 
 export default {
   getCourses(index) {
