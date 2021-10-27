@@ -7,10 +7,10 @@
         <v-col>
             
            <!-- <v-text-field label="Advisor ID" v-model="advisor.advisorID" type="text" id="advisorDept"/> -->
-            <v-text-field label="First Name" v-model="advisor.fName" type="text" id="advisorName" />
-            <v-text-field label="Last Name" v-model="advisor.lName" type="text" id="advisorHours"/>
-            <v-text-field label="Email" v-model="advisor.email" type="text" id="advisorLevel"/>
-            <v-text-field label="Department" v-model="advisor.dept" type="text" id="advisorLevel"/>
+            <v-text-field label="First Name" placeholder="Jane" v-model="advisor.fName" type="text" id="advisorName" />
+            <v-text-field label="Last Name" placeholder="Doe" v-model="advisor.lName" type="text" id="advisorHours"/>
+            <v-text-field label="Email" placeholder="jane.doe@oc.edu" v-model="advisor.email" type="text" id="advisorLevel"/>
+            <v-text-field label="Department" placeholder="Computer Science" v-model="advisor.dept" type="text" id="advisorLevel"/>
        
        </v-col>
       <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="addAdvisor()" text rounded>Submit</v-btn>
