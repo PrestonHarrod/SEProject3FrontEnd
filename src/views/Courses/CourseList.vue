@@ -1,7 +1,6 @@
 <template>
 <v-container fluid fill-height> <!--fluid fill-height-->
   <div>
-    <Nav/>
     <H1 style="background-color: #811429; color:#f2f2f2">Course List</H1>
     <br>
     <br>
@@ -51,9 +50,8 @@
 //import CourseListDisplay from '@/components/CourseListDisplay.vue'
 import courseServices from '@/services/courseServices.js'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
-import Nav from '@/components/Nav.vue'
 export default {
-    components: {ConfirmDialog, Nav},
+    components: {ConfirmDialog},
     data() {
         return {
             courses: {},

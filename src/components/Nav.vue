@@ -77,14 +77,6 @@ export default ({
          console.log(error)
         })
       },
-      goToSemesters() {
-          this.$router.push({ name: 'semesterlist'})
-        .then(() => {
-        })
-        .catch(error => {
-         console.log(error)
-        })
-      },
       goToLogin() {
           this.$router.push({ name: 'login'})
         .then(() => {

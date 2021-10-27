@@ -1,8 +1,7 @@
 <template>
     <v-container>
         <v-row>
-            <v-col>
-                <Nav/>              
+            <v-col>         
                 <p v-if=user>Welcome, {{user.user}}</p>          
             </v-col>
         </v-row>
