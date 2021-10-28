@@ -79,6 +79,7 @@ export default {
     })
     .catch(error => {
       console.log(error)
+      alert("ERROR: retrieve courses failed");
     })
 },
   goToAdd() {

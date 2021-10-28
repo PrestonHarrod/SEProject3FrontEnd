@@ -34,6 +34,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
+          alert("ERROR: Add Degree unsuccessful. Make sure that fields are entered correctly");
         })
     },
     cancel() {
