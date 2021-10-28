@@ -1,26 +1,32 @@
-<template>
-<div>
-  <img alt="Vue logo" src="./assets/logo.png" 
-    contain
-    height="300"
-    width="500">
-  <div id='app'>
-    <div id="nav">
 
-    </div>
-  </div>
-    <router-view />
-    <ConfirmDialog />
-    </div>
+<template>
+<v-container fluid>
+  <v-layout>
+      <v-flex>
+        <div>
+          <div v-if= "isLogin()">
+          <Nav/>
+          </div>
+          <router-view />
+          
+        </div>
+      </v-flex>
+  </v-layout>
+</v-container>
 </template>
 
 <script>
-import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import Nav from '@/components/Nav.vue'
 export default {
   name: 'App',
   components: {
-    ConfirmDialog
+    Nav
   },
+  methods: {
+    isLogin() {
+     return this.$route.name != 'login';
+    }
+  }
 }
 </script>
 
@@ -33,4 +39,6 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+
 </style>
