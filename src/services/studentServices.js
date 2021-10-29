@@ -3,8 +3,6 @@ export default {
   getStudents(index) {
     return apiClient.get("students?index=" + index);
   },
-
-
   getStudent(id) {
     return apiClient.get("students/" + id);
   },
