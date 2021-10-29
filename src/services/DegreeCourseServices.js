@@ -8,7 +8,6 @@ export default {
     return apiClient.get("degreecourses?courseID=" + id);
   },
   getDegreeCoursesForDegree(id) {
-    console.log(id)
     return apiClient.get("degreecourses?degreeID=" + id);
   },
   getDegreeCourse(id) {

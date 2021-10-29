@@ -2,6 +2,7 @@
   <div>
       <Nav/>
 <H1 style="background-color: #811429; color:#f2f2f2">{{student.fName + ' ' + student.lName + "'s Courses"}}</H1>
+<H2>Hours: {{totalHours}}   GPA: {{gpa}}   Major: {{student.major}}   Major Hours: {{majorHours}}</H2>
 <br>
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
   <v-card width="100vw">
@@ -35,8 +36,6 @@
 import Nav from '@/components/Nav.vue'
 import StudentServices from '@/services/studentServices.js';
 import StudentCourseServices from '@/services/StudentCourseServices.js';
-//import courseServices from '@/services/courseServices.js'
-//import SemesterCourse from '@/components/SemesterCourse';
 import DegreeCourseServices from '@/services/DegreeCourseServices.js';
 export default {
     components: {
@@ -47,17 +46,59 @@ export default {
         return {
             student: {},
             studentCourses : [],
-            degreecourses: []
+            degreecourses: [],
+            degreeCourses : [],
+            totalHours : 0,
+            majorHours : 0,
+            degree:{},
+            gpa : 0,
+            grades :[],
+            gpaGrades : ['A','B','C','D','F'], 
         };
     },
     methods: {
         cancel() {
       this.$router.push({ name: 'studentlist' })
     },
+            calcTotalHours() {
+          this.totalHours = 0;
+          this.studentCourses.forEach(studentCourse => { 
+            this.totalHours += studentCourse.course.hours
+            });
+        },
+        calcMajorHours() {
+          this.majorHours = 0;
+          this.studentCourses.filter(studentCourse => this.degreeCourses.includes(studentCourse.courseID))
+            .forEach(studentCourse => { 
+                this.majorHours += studentCourse.course.hours;
+                });
+        },
+        calcGPA() {
+          let totalHours = 0;
+          let totalPoints = 0;
+          this.studentCourses.filter(studentCourse => this.gpaGrades.includes(studentCourse.grade)).forEach(studentCourse => { 
+            totalHours += studentCourse.course.hours;
+            totalPoints += studentCourse.course.hours * this.grades[studentCourse.grade];
+            });
+          if (totalHours == 0) {
+            this.gpa=0;
+            this.gpa.toPrecision(3);
+          }
+          else {
+            this.gpa = totalPoints/totalHours;
+            this.gpa = this.gpa.toPrecision(3);
+          }
+          
+        },
 
         
     },
     async created() {
+        this.grades["A"] = 4;
+        this.grades["B"] = 3;
+        this.grades["C"] = 2;
+        this.grades["D"] = 1;
+        this.grades["F"] = 0;
          await StudentServices.getStudent(this.id)
             .then(response => {
                 this.student = response.data;
@@ -72,7 +113,7 @@ export default {
         await DegreeCourseServices.getDegreeCoursesForDegree(this.student.degreeID)
             .then(response => {
               let dc = response.data;
-              dc.forEach(degreeCourse => this.degreecourses.push(degreeCourse.courseID))
+              dc.forEach(degreeCourse => this.degreeCourses.push(degreeCourse.courseID))
             })
             .catch(error => {
                 console.log(error)
@@ -89,6 +130,9 @@ export default {
             .catch(error => {
                 console.log(error)
             });
+            this.calcTotalHours();
+            this.calcMajorHours();
+            this.calcGPA();
                
         
           
