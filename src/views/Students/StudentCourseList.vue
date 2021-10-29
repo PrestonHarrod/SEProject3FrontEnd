@@ -46,12 +46,15 @@ export default {
     data() {
         return {
             student: {},
-            studentCourses : {},
-            course: {},
+            studentCourses : [],
             degreecourses: []
         };
     },
     methods: {
+        cancel() {
+      this.$router.push({ name: 'studentlist' })
+    },
+
         
     },
     async created() {
@@ -65,38 +68,23 @@ export default {
                 console.log(error)
             });
             let semesters = [];
-        // await StudentCourseServices.getStudentCoursesForStudent(this.id)
-        //     .then(response=> {
-        //         this.studentCourses = response.data
-        //         console.log(response.data)
-        //     }).catch(error => {
-        //         console.log(error)
-            // })
-        await DegreeCourseServices.getDegreeCoursesForDegree(this.student.degreeId)
+        
+        await DegreeCourseServices.getDegreeCoursesForDegree(this.student.degreeID)
             .then(response => {
               let dc = response.data;
-              dc.forEach(degreeCourse => this.degreeCourses.push(degreeCourse.courseId));
+              dc.forEach(degreeCourse => this.degreecourses.push(degreeCourse.courseID))
             })
             .catch(error => {
-                this.message = error.response.data.message;
+                console.log(error)
             });
         await StudentCourseServices.getStudentCoursesForStudent(this.id) 
             .then(response => {
               this.studentCourses = response.data;
-              this.studentCourses.sort(function(a, b) {
-                  if (a.semester.startDate<b.semester.startDate) return -1;
-                  else if (a.semester.startDate<b.semester.startDate) return 1;
-                  return 0
-              }
-              );
-              
               this.studentCourses.forEach(function (studentCourse) {
                   if (!((semesters).includes(studentCourse.semester)))
-                    semesters.push(studentCourse.semester.code)
+                    semesters.push(studentCourse.semester)
                 });
-              semesters.forEach(function (semester) {
-                this.semesterCourses.push(this.studentCourses.filter(studentCourse => studentCourse.semester==semester));
-              },this);
+              
             })
             .catch(error => {
                 console.log(error)

@@ -5,7 +5,7 @@ export default {
     return apiClient.get("studentcourses");
   },
   getStudentCoursesForStudent(id) {
-    return apiClient.get("studentcourses?studentId=" + id);
+    return apiClient.get("studentcourses?studentID=" + id);
   },
 
   getStudentCourse(id) {

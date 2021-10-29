@@ -5,10 +5,11 @@ export default {
     return apiClient.get("degreecourses");
   },
   getDegreeCoursesForCourse(id) {
-    return apiClient.get("degreecourses?courseId=" + id);
+    return apiClient.get("degreecourses?courseID=" + id);
   },
   getDegreeCoursesForDegree(id) {
-    return apiClient.get("degreecourses?degreeId=" + id);
+    console.log(id)
+    return apiClient.get("degreecourses?degreeID=" + id);
   },
   getDegreeCourse(id) {
     return apiClient.get("degreecourses/" + id);

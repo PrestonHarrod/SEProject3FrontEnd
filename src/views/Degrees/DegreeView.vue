@@ -45,8 +45,8 @@ export default {
     addForm(){
       this.viewDegreeDisplay = true;
     },
-    courses() {
-      this.$router.push({name: 'degreecourse'})
+    courses(degree) {
+      this.$router.push({name: 'degreecourse', params: {id: degree.degreeID}})
       .then(() => {})
       .catch(error => {
         console.log(error)

@@ -149,7 +149,7 @@ export default new Router({
         props: true
       },
       {
-        path: "/api/degreecourse/",
+        path: "/api/degreecourse/:id",
         name: "degreecourse",
         component: DegreeCourse,
         props: true
