@@ -1,5 +1,5 @@
 <template>
-<v-container fluid fill-height> <!--fluid fill-height-->
+<v-container fluid fill-height>
   <div>
     <Nav/>
     <H1 style="background-color: #811429; color:#f2f2f2">Degree List</H1>
@@ -7,35 +7,24 @@
     <br>
      <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Degree</v-btn></h2>
   <br>
-   <v-pagination
-      v-model="page"
-      :length="62"
-      :total-visible="12"
-      @input="next"
-    ></v-pagination>
-  <br>
-    <v-card width="100vw">
-         <v-simple-table height="1000px" fixed-header>
-          <template v-slot:default>   
-            <thead>
-                <tr>
-                    <th>Dept</th>
-                    <th>Degree</th>
-                    <th>Hours</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="degree in degrees" :key="degree.degreeID" :degree="degree">
-                    <td>{{degree.dept}}</td>
-                    <td>{{degree.degree}}</td>
-                    <td>{{degree.hours}}</td>
-                    <td><v-btn color="#66BB6A" @click="viewDegree(degree.degreeID)">Details</v-btn></td>
-                    <td><v-btn color="#E53935" @click="doDelete(degrees, degree.degreeID)">Delete</v-btn></td>       
-                    <confirm-dialog ref="confirmDialog"></confirm-dialog>
-                </tr>
-            </tbody>
-            </template>
-        </v-simple-table>
+   <v-card width="100vw">
+       <v-card-title>  
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search by Degree or Department"
+        single-line
+        hide-details
+      ></v-text-field>
+    </v-card-title>
+      <v-data-table
+        :headers="headers"
+        :items="degrees"
+        item-key="degree.degreeID"
+        :items-per-page="25"
+        :search="search"
+        @click:row="viewDegree">
+      </v-data-table>
     </v-card>
   </div>
 </v-container>
@@ -43,22 +32,44 @@
 
 
 <script>
-//import CourseListDisplay from '@/components/CourseListDisplay.vue'
 import courseServices from '@/services/courseServices.js'
-import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import Nav from '@/components/Nav.vue'
 
 export default {
-    components: {ConfirmDialog, Nav},
+    components: {Nav},
     data() {
         return {
-            degrees: {},
-            page: 1
+           search: '',
+          headers: [
+            {
+            text: 'Department',
+            align: 'start',
+            filterable: true,
+            value: 'dept',
+            },
+            {
+            text: 'Degree Name',
+            align: 'start',
+            filterable: true,
+            value: 'degree'
+            },
+            {
+            text: 'Hours',
+            align: 'start',
+            filterable: false,
+            value: 'hours',
+            },
+          ],
+            degrees: [
+              {
+
+            },
+            ],
         };
     },
   created() {
 
-      courseServices.getDegrees(this.page) 
+      courseServices.getDegrees() 
       .then(response => {
         this.degrees = response.data
       })
@@ -67,17 +78,7 @@ export default {
       })
   },
   methods: {
-    next (page) {
-  
-  courseServices.getDegrees(page * 50)
-    .then(response => {
-      
-      this.degrees = response.data
-    })
-    .catch(error => {
-      console.log(error)
-    })
-},
+    
   goToAdd() {
     this.$router.push({ name: 'addDegree'})
     .then(() => {
@@ -87,28 +88,14 @@ export default {
         })
   },
    viewDegree(degree) {
-          this.$router.push({ name: 'viewDegree', params: {id: degree}})
+     let id = degree.degreeID
+          this.$router.push({ name: 'viewDegree', params: {id: id}})
         .then(() => {
         })
         .catch(error => {
          console.log(error)
         })
     },
-   async doDelete(degrees, id) {
-            if(confirm("Do you really want to delete?")){
-                courseServices.deleteDegree(id)
-                .then(() => {
-        this.degrees.forEach((degree,i) => {
-          if (degree.degreeID == id) {
-            this.degrees.splice(i, 1);
-          }
-        })
-        })
-                .catch(error => {
-                    console.log(error);
-                })
-   }
-      },
       
       },
 

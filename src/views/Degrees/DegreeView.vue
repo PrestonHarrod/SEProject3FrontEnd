@@ -4,6 +4,8 @@
 <br>
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
     <h3><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateDegree(degree)" text rounded>Edit</v-btn>
+   <br>
+    <v-btn color="#E53935" :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteDegree(degree)" text rounded>Delete</v-btn>
    </h3>
   <v-form>
         <v-col>
@@ -13,15 +15,17 @@
            
        </v-col>
     </v-form>
+<confirm-dialog ref="confirmDialog"></confirm-dialog>
 
   </div>
 </template>
 
 <script>
 import courseServices from '@/services/courseServices.js'
+import ConfirmDialog from '@/components/ConfirmDialog.vue'
 export default {
   props: ['id'],
-  components: {},
+  components: {ConfirmDialog},
   data() {
     return {
       degree: {}
@@ -57,19 +61,19 @@ export default {
       this.$router.push({ name: 'degreelist' })
     },
 
-    deleteDegree(id){
+     async deleteDegree(degree){
+      let id = degree.degreeID
+      if(confirm("Do you really want to delete?")){
     courseServices.deleteDegree(id)
       .then(() => {
-        this.degrees.forEach((degree,i) => {
-          if (degree.id == id) {
-            this.degrees.splice(i, 1);
-          }
+         this.$router.push({ name: 'degreelist' }) 
         })
-          
-        })
+       
+        
         .catch(error => {
-         this.message = error.response.data.message
+          console.log(error)
         })
+      }
     },
     
 }
