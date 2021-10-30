@@ -1,7 +1,6 @@
 <template>
 <v-container fluid fill-height> 
   <div>
-    <Nav/>
     <H1 style="background-color: #811429; color:#f2f2f2">Semester List</H1>
     <br>
     <br>
@@ -33,10 +32,12 @@
 
 <script>
 import courseServices from '@/services/courseServices.js'
+
 import Nav from '@/components/Nav.vue'
 
 export default {
     components: {Nav},
+
     data() {
         return {
            search: '',

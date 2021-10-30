@@ -4,8 +4,10 @@
 <br>
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
     <h3><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updatestudent(student)" text rounded>Edit</v-btn>
+
    <br>
     <v-btn color="#E53935" :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteStudent(student)" text rounded>Delete</v-btn>
+
    </h3>
   <v-form>
         <v-col>
@@ -52,6 +54,7 @@ export default {
     addForm(){
       this.addStudentDisplay = true;
     },
+   
     updatestudent(student) {
           this.$router.push({ name: 'editstudent', params: {id: student.studentID}})
         .then(() => {

@@ -15,6 +15,7 @@
            
        </v-col>
     </v-form>
+
 <confirm-dialog ref="confirmDialog"></confirm-dialog>
 
   </div>
@@ -49,6 +50,7 @@ export default {
     addForm(){
       this.viewDegreeDisplay = true;
     },
+
     updateDegree(degree) {
           this.$router.push({ name: 'editdegree', params: {id: degree.degreeID}})
         .then(() => {

@@ -4,12 +4,11 @@
   <v-layout>
       <v-flex>
         <div>
-          <img alt="Vue logo" src="./assets/logo.png" 
-            contain
-            height="300"
-            width="500">
+          <div v-if= "isLogin()">
+          <Nav/>
+          </div>
           <router-view />
-          <ConfirmDialog />
+          
         </div>
       </v-flex>
   </v-layout>
@@ -17,12 +16,17 @@
 </template>
 
 <script>
-import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import Nav from '@/components/Nav.vue'
 export default {
   name: 'App',
   components: {
-    ConfirmDialog
+    Nav
   },
+  methods: {
+    isLogin() {
+     return this.$route.name != 'login';
+    }
+  }
 }
 </script>
 

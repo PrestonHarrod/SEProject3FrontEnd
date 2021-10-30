@@ -1,9 +1,9 @@
 <template>
     <v-container>
         <v-row>
-            <v-col>
-                <Nav/>              
-                <p v-if=user>Welcome, {{user.user}}</p>          
+            <v-col>         
+                <p v-if=user>Welcome, {{user.user}}</p>   
+                <p v-else>Please login </p>       
             </v-col>
         </v-row>
     </v-container>
