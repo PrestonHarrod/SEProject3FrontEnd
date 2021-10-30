@@ -33,10 +33,9 @@
 <script>
 import courseServices from '@/services/courseServices.js'
 
-import Nav from '@/components/Nav.vue'
 
 export default {
-    components: {Nav},
+    components: {},
 
     data() {
         return {
