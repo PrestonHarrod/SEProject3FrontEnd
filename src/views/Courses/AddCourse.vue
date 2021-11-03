@@ -14,6 +14,7 @@
       <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="addCourse()" text rounded>Submit</v-btn>
       <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
     </v-form>
+
 </div>
 </template>
 
@@ -22,7 +23,8 @@ import courseServices from '@/services/courseServices.js'
 export default {
   data() {
     return {
-      course: {}
+      course: {},
+
     }
   },
   methods: {
@@ -31,9 +33,11 @@ export default {
         courseServices.addCourse(this.course)
         .then(() => {
           this.$router.push({ name: 'courses' })
+          this.checkError(false);
         })
         .catch(error => {
           console.log(error)
+          alert("ERROR: Add course unsuccessful. Make sure that fields are entered correctly and that the Semester ID  exists in the system.");
         })
     },
     cancel() {

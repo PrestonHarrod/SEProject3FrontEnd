@@ -39,6 +39,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
+          alert("ERROR: Add advisor unsuccessful. Make sure that fields are entered correctly.");
         })
     },
     cancel() {

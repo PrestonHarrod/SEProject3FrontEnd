@@ -47,7 +47,8 @@ export default {
         this.$router.push({name: 'viewSemester'});
         })
         .catch(error => {
-        console.log('There was an error:', error.response)
+        console.log('There was an error:', error.response),
+        alert("ERROR: Add student unsuccessful. Make sure that fields are entered correctly and that the Advisor ID and Degree ID exists in the system.");
         })
         
     },
@@ -62,7 +63,8 @@ export default {
           
         })
         .catch(error => {
-         this.message = error.response.data.message
+         this.message = error.response.data.message,
+         alert("ERROR: Add student unsuccessful. Make sure that fields are entered correctly and that the Advisor ID and Degree ID exists in the system.");
         })
     },
     
