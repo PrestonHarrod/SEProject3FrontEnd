@@ -84,7 +84,9 @@ export default {
       })
   },
   methods: {
-   
+  checkToken(){
+      return localStorage.getItem("token");
+  },
   goToAdd() {
     this.$router.push({ name: 'addAdvisor'})
     .then(() => {
