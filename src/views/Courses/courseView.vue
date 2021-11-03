@@ -5,6 +5,8 @@
 <br>
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
     <h3><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateCourse(course)" text rounded>Edit</v-btn>
+    <br>
+    <v-btn color="#E53935" :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteCourse(course)" text rounded>Delete</v-btn>
    </h3>
   <v-form>
         <v-col>
@@ -16,15 +18,16 @@
             <v-textarea readonly label="Description" v-model="course.desc" type="text" id="desc" />
        </v-col>
     </v-form>
-
+<confirm-dialog ref="confirmDialog"></confirm-dialog>
   </div>
 </template>
 
 <script>
 import courseServices from '@/services/courseServices.js'
+import ConfirmDialog from '@/components/ConfirmDialog.vue'
 export default {
   props: ['id'],
-  components: {},
+  components: {ConfirmDialog},
   data() {
     return {
       course: {}
@@ -63,19 +66,19 @@ export default {
       this.$router.push({ name: 'courses' })
     },
 
-    deleteCourse(id){
+    async deleteCourse(course){
+      let id = course.courseID
+      if(confirm("Do you really want to delete?")){
     courseServices.deleteCourse(id)
       .then(() => {
-        this.courses.forEach((course,i) => {
-          if (course.id == id) {
-            this.courses.splice(i, 1);
-          }
+         this.$router.push({ name: 'courses' }) 
         })
-          
-        })
+       
+        
         .catch(error => {
-         this.message = error.response.data.message
+          console.log(error)
         })
+      }
     },
     
 }

@@ -24,6 +24,8 @@ import SemesterList from './views/Semesters/SemesterList.vue'
 import ViewSemester from './views/Semesters/SemesterView.vue'
 import semesterEdit from './views/Semesters/SemesterEdit.vue'
 import AddSemester from './views/Semesters/SemesterAdd.vue'
+import DegreeCourse from './views/Degrees/DegreeCourse.vue'
+import StudentCourseList from './views/Students/StudentCourseList.vue'
 
 Vue.use(Router)
 export default new Router({
@@ -44,6 +46,13 @@ export default new Router({
       name: 'login',
       component: Login,
     },
+    {
+      path: '/api/studentcourselist/:id',
+      name: 'studentcourselist',
+      component: StudentCourseList,
+      props: true
+    },
+    
     {
       path: '/api/courses',
       name: 'courses',
@@ -137,6 +146,12 @@ export default new Router({
         path: "/api/degree-edit/:id",
         name: "editdegree",
         component: DegreeEdit,
+        props: true
+      },
+      {
+        path: "/api/degreecourse/:id",
+        name: "degreecourse",
+        component: DegreeCourse,
         props: true
       },
       {

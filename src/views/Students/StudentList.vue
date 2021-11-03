@@ -1,43 +1,31 @@
 <template>
-<v-container fluid fill-height> <!--fluid fill-height-->
+<v-container fluid fill-height>
   <div>
     <H1 style="background-color: #811429; color:#f2f2f2">Student List</H1>
     <br>
     <br>
      <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Student</v-btn></h2>
   <br>
-  
-   <v-pagination
-      v-model="page"
-      :length="62"
-      :total-visible="12"
-      @input="next"
-    ></v-pagination>
-  <br>
-    <v-card width="100vw">
-         <v-simple-table height="1000px" fixed-header>
-          <template v-slot:default>   
-            <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="student in students" :key="student.studentID" :student="student">
-                    <td>{{student.fName}}</td>
-                    <td>{{student.lName}}</td>
-                    <td>{{student.email}}</td>
-                    <td><v-btn color="#66BB6A" @click="viewStudent(student.studentID)">Details</v-btn></td>
-                    <td><v-btn color="#E53935" @click="doDelete(students, student.studentID)">Delete</v-btn></td>       
-                    <confirm-dialog ref="confirmDialog"></confirm-dialog>
-                </tr>
-            </tbody>
-            </template>
-        </v-simple-table>
+
+     <v-card width="100vw">
+       <v-card-title>  
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search by First or Last Name"
+        single-line
+        hide-details
+      ></v-text-field>
+    </v-card-title>
+      <v-data-table
+        :headers="headers"
+        :items="students"
+        item-key="student.studentID"
+        :items-per-page="25"
+        :search="search"
+        @click:row="viewStudent">
+      </v-data-table>
+
     </v-card>
   </div>
 </v-container>
@@ -45,21 +33,45 @@
 
 
 <script>
-//import CourseListDisplay from '@/components/CourseListDisplay.vue'
 import courseServices from '@/services/courseServices.js'
-import ConfirmDialog from '@/components/ConfirmDialog.vue'
+
 
 export default {
-    components: {ConfirmDialog},
+    components: {},
+
     data() {
         return {
-            students: {},
-            page: 1
+           search: '',
+          headers: [
+            {
+            text: 'First Name',
+            align: 'start',
+            filterable: true,
+            value: 'fName',
+            },
+            {
+            text: 'Last Name',
+            align: 'start',
+            filterable: true,
+            value: 'lName'
+            },
+            {
+            text: 'Email',
+            align: 'start',
+            filterable: false,
+            value: 'email',
+            },
+          ],
+            students: [
+              {
+
+              },
+            ],
         };
     },
   created() {
 
-      courseServices.getStudents(this.page) 
+      courseServices.getStudents() 
       .then(response => {
         this.students = response.data
       })
@@ -68,18 +80,6 @@ export default {
       })
   },
   methods: {
-    next (page) {
-  
-  courseServices.getStudents(page * 50)
-    .then(response => {
-      
-      this.students = response.data
-      console.log(this.page)
-    })
-    .catch(error => {
-      console.log(error)
-    })
-},
   goToAdd() {
     this.$router.push({ name: 'addStudent'})
     .then(() => {
@@ -89,30 +89,16 @@ export default {
         })
   },
    viewStudent(student) {
+     let id = student.studentID
      console.log(student + "here")
-          this.$router.push({ name: 'viewStudent', params: {id: student}})
+          this.$router.push({ name: 'viewStudent', params: {id: id}})
         .then(() => {
         })
         .catch(error => {
          console.log(error)
         })
     },
-   async doDelete(students, id) {
-            if(confirm("Do you really want to delete?")){
-                courseServices.deleteStudent(id)
-                .then(() => {
-        this.students.forEach((student,i) => {
-          if (student.studentID == id) {
-            this.students.splice(i, 1);
-          }
-        })
-        })
-                .catch(error => {
-                    console.log(error);
-                })
-   }
-      },
-      
+
       },
 
   }

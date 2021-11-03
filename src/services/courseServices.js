@@ -2,8 +2,8 @@ import {apiClient} from './apiClient.js'
 
 
 export default {
-  getCourses(index) {
-    return apiClient.get("courses?index=" + index);
+  getCourses() {
+    return apiClient.get("/courses");
   },
   getCourse(id) {
     return apiClient.get("courses/" + id);
@@ -77,4 +77,7 @@ export default {
   deleteSemester(semesterID) {
     return apiClient.delete("semesters/" + semesterID);
   },
+  getDegreeCourse() {
+    return apiClient.get('degreecourses/')
+  }
 };
