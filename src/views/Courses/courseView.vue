@@ -47,6 +47,7 @@ export default {
         
       .catch(error => {
         console.log('There was an error:', error.response)
+        alert("ERROR: retrieve course failed");
       })
   },
   methods: {

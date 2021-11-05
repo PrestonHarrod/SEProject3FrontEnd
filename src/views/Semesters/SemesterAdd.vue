@@ -90,6 +90,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
+          alert("ERROR: Add semester unsuccessful. Make sure that fields are entered correctly.");
         })
     },
     cancel() {

@@ -41,6 +41,7 @@ export default {
       })
       .catch(error => {
         console.log('There was an error:', error.response)
+        alert("Error getting advisor");
         
       })
         
@@ -58,6 +59,7 @@ export default {
         })
         .catch(error => {
          console.log(error)
+         alert("Error going to update failed");
         })
     },
     cancel() {
@@ -74,7 +76,9 @@ export default {
        
         
         .catch(error => {
-          console.log(error)
+         this.message = error.response.data.message
+          alert("Error deleting advisor");
+
         })
       }
     },
