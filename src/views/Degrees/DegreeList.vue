@@ -4,7 +4,7 @@
     <H1 style="background-color: #811429; color:#f2f2f2">Degree List</H1>
     <br>
     <br>
-     <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Degree</v-btn></h2>
+     <h2><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Degree</v-btn></h2>
   <br>
    <v-card width="100vw">
        <v-card-title>  
@@ -32,7 +32,7 @@
 
 <script>
 import courseServices from '@/services/courseServices.js'
-
+import Utils from '@/config/utils.js';
 
 export default {
     components: {},
@@ -40,6 +40,7 @@ export default {
 
     data() {
         return {
+          user: {},
            search: '',
           headers: [
             {
@@ -66,10 +67,11 @@ export default {
 
             },
             ],
+            
         };
     },
   created() {
-
+      this.user = Utils.getStore('user');
       courseServices.getDegrees() 
       .then(response => {
         this.degrees = response.data
@@ -90,7 +92,8 @@ export default {
   },
    viewDegree(degree) {
      let id = degree.degreeID
-          this.$router.push({ name: 'viewDegree', params: {id: id}})
+          if(this.user.advisorID != null)
+            this.$router.push({ name: 'viewDegree', params: {id: id}})
         .then(() => {
         })
         .catch(error => {
