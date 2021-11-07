@@ -26,6 +26,7 @@ export default {
   data() {
     return {
       degree: {},
+      //autodeploy another test
     }
   },
   created() {
