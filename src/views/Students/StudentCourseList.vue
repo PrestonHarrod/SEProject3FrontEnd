@@ -45,6 +45,7 @@ import StudentServices from '@/services/studentServices.js';
 import StudentCourseServices from '@/services/StudentCourseServices.js';
 import courseServices from '@/services/courseServices.js'
 import DegreeCourseServices from '@/services/DegreeCourseServices.js';
+import Utils from '@/config/utils.js';
 
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
@@ -52,9 +53,11 @@ export default {
     components: {
         
     },
+    
     props :['id'],
     data() {
         return {
+          user: {},
           selected: [],
             student: {},
             studentCourses : [],
@@ -98,7 +101,6 @@ export default {
  async deleteStudentCourse(selected) {
       let obj = selected[0];
       let id = obj.id
-      console.log("here" + id)
       if (obj.status == "Registered") {
         if(confirm("Do you really want to delete?")){
            courseServices.deleteStudentCourse(id)
@@ -120,16 +122,28 @@ export default {
 },
 
       viewStudentCourse(studentCourse) {
-     let id = studentCourse.id
+        let id = studentCourse.id
+         if (this.user != null && this.user.advisorID != null) {
+     
           this.$router.push({ name: 'studentcourselistedit', params: {id: id}})
         .then(() => {
         })
         .catch(error => {
          console.log(error)
         })
+         }
+         else {
+          alert("ERROR: Do not have permissions to edit");
+
+         }
     },
         cancel() {
+           if (this.user != null && this.user.advisorID == null) {
       this.$router.push({ name: 'courses' })
+           }
+           else {
+             this.$router.push({ name: 'studentlist' })
+           }
     },
      generatePDF() {
     
@@ -178,13 +192,13 @@ export default {
         
     },
     async created() {
+      this.user = Utils.getStore('user');
          await StudentServices.getStudent(this.id)
             .then(response => {
                 this.student = response.data;
                 
             })
             .catch(error => {
-                console.log("getStudent"+error)
                 console.log(error)
             });
             let semesters = [];
@@ -197,7 +211,7 @@ export default {
             .catch(error => {
                 console.log(error)
             });
-        await StudentCourseServices.getStudentCoursesForStudent(this.id) 
+        await StudentCourseServices.getStudentCoursesForStudent(this.id) //this.student.studentID
             .then(response => {
               this.studentCourses = response.data;
               this.studentCourses.forEach(function (studentCourse) {

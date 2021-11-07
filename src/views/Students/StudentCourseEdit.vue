@@ -10,7 +10,7 @@
 
        </v-col>
       <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateGrade()" text rounded>Submit</v-btn>
-      <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
+      <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel(studentCourse.studentID)" color="black" text rounded>Cancel</v-btn>
     </v-form>
   </div>
 </template>
@@ -39,8 +39,8 @@ export default {
   },
   methods: {
     
-    cancel() {
-      this.$router.push({ name: 'studentcourselist' })
+    cancel(id) {
+      this.$router.push({ name: 'studentcourselist', params: {id: id}})
     },
     updateGrade(){
       courseServices.updateStudentCourse(this.studentCourse)

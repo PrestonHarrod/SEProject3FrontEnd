@@ -6,7 +6,8 @@
     <br>
      <h2><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Student</v-btn></h2>
   <br>
-
+  <h3><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToStudentCourses(selected)" color="black" text rounded>View Student's Courses</v-btn></h3>
+     <h4>{{selected}}</h4>
      <v-card width="100vw">
        <v-card-title>  
       <v-text-field
@@ -18,9 +19,12 @@
       ></v-text-field>
     </v-card-title>
       <v-data-table
+        v-model="selected"
+        show-select
+        single-select
         :headers="headers"
         :items="students"
-        item-key="student.studentID"
+        item-key="email"
         :items-per-page="25"
         :search="search"
         @click:row="viewStudent">
@@ -41,6 +45,7 @@ export default {
 
     data() {
         return {
+          selected: [],
           user: {},
            search: '',
           headers: [
@@ -81,6 +86,12 @@ export default {
       })
   },
   methods: {
+    goToStudentCourses(selected) {
+      let obj = selected[0]
+      let id = obj.studentID
+       this.$router.push({ name: 'studentcourselist', params: {id: id}})
+
+    },
   goToAdd() {
     this.$router.push({ name: 'addStudent'})
     .then(() => {
@@ -91,7 +102,6 @@ export default {
   },
    viewStudent(student) {
      let id = student.studentID
-     console.log(student + "here")
      if(this.user.advisorID != null)
           this.$router.push({ name: 'viewStudent', params: {id: id}})
         .then(() => {
