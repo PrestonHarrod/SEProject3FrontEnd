@@ -2,24 +2,32 @@
 <template>
   <div>
     <H1 style="background-color: #811429; color:#f2f2f2">Course Edit</H1>
-
+    <v-app>
     <v-form>
         <v-col>
           <v-text-field label="Course Name" v-model="course.name" type="text" id="name" />
           <v-text-field label="Semester ID" v-model="course.semesterID" type="text" id="semesterID"/>
           <v-text-field label="Dept" v-model="course.dept" type="text" id="courseDept"/>
           <v-text-field label="Number" v-model="course.courseNum" type="text" id="courseNumber"/>
-          <v-text-field label="Hours" v-model="course.hours" type="text" id="courseHours"/>
-          <v-text-field label="Level" v-model="course.level" type="text" id="courseLevel"/>
+          <v-select id='hours' v-model="course.hours"
+            :items= "hoursItems"
+            label="Hours"
+          ></v-select>
+          <v-select id='level' v-model="course.level"
+            :items= "levelItems" 
+            label="Level"
+          ></v-select>
           <v-textarea label="Description" v-model="course.desc" type="text" id="courseDescription" />
        </v-col>
-      <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateCourse()" text rounded>Submit</v-btn>
-      <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
+      <v-btn v-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="updateCourse()" text rounded>Submit</v-btn>
+      <v-btn :style="{transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
     </v-form>
+    </v-app>
   </div>
-</template>
+</template> 
 <script>
 import courseServices from '@/services/courseServices.js'
+import Utils from '@/config/utils.js'
 
 export default {
   props: ['id'],
@@ -28,10 +36,14 @@ export default {
   },
   data() {
     return {
+      user: {},
       course: {},
+      hoursItems: [0, 1, 2, 3, 4],
+      levelItems: ['0000', '1000', '2000', '3000', '4000', '5000'],
     }
   },
   created() {
+      this.user = Utils.getStore('user');
       courseServices.getCourse(this.id)
       .then(response => {
         this.course = response.data;
