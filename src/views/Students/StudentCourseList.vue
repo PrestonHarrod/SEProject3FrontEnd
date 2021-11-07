@@ -1,60 +1,180 @@
 <template>
+<v-container fluid fill-height>
   <div>
-      <Nav/>
+  
 <H1 style="background-color: #811429; color:#f2f2f2">{{student.fName + ' ' + student.lName + "'s Courses"}}</H1>
 <br>
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
-  <v-card width="100vw">
-         <v-simple-table height="1000px" fixed-header>
-          <template v-slot:default>   
-            <thead>
-                <tr>
-                    <th>Course Name</th>
-                    <th>Grade</th>
-                    <th>Status</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="studentCourse in studentCourses" :key="studentCourse.id" :studentCourse="studentCourse">
-                    <td>{{studentCourse.course.name}}</td>
-                    <td>{{studentCourse.grade}}</td>
-                    <td>{{studentCourse.status}}</td>      
-                    
-                </tr>
-            </tbody>
-            </template>
-        </v-simple-table>
-    </v-card>
+ 
+ <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="generatePDF()"  color="black"  text rounded>Print Degree Plan</v-btn>
+ <br>
+ <v-btn color="#E53935" :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteStudentCourse(selected)" text rounded>Remove Course</v-btn>
 
+  <v-card width="100vw">
+       <v-card-title>
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search by Semester or Course Name"
+        single-line
+        hide-details
+      ></v-text-field>
+    </v-card-title>
+      <v-data-table
+      v-model="selected"
+      show-select
+      single-select
+        :headers="headers"
+        :items="studentCourses"
+        item-key="course.name"
+        :items-per-page="25"
+        :search="search"
+        @click:row="viewStudentCourse"
+        class="elevation-1"
+        >
+        
+         </v-data-table>
+    </v-card>
   </div>
+</v-container>
 </template>
 
 <script>
-import Nav from '@/components/Nav.vue'
+import img from '@/assets/ocBanner.png';
 import StudentServices from '@/services/studentServices.js';
 import StudentCourseServices from '@/services/StudentCourseServices.js';
-//import courseServices from '@/services/courseServices.js'
-//import SemesterCourse from '@/components/SemesterCourse';
+import courseServices from '@/services/courseServices.js'
 import DegreeCourseServices from '@/services/DegreeCourseServices.js';
+
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 export default {
     components: {
-        Nav
+        
     },
     props :['id'],
     data() {
         return {
+          selected: [],
             student: {},
             studentCourses : [],
-            degreecourses: []
+            degreecourses: [],
+             search: '',
+          headers: [
+            {
+            text: 'Semester',
+            align: 'start',
+            filterable: true,
+            value: 'semester.season',
+            },
+            {
+            text: 'Start Date',
+            align: 'start',
+            filterable: false,
+            value: 'semester.startDate'
+            },
+            {
+            text: 'Course Name',
+            align: 'start',
+            filterable: true,
+            value: 'course.name',
+            },
+            {
+            text: 'Grade',
+            align: 'start',
+            filterable: false,
+            value: 'grade',
+            },
+            {
+            text: 'Status',
+            align: 'start',
+            filterable: false,
+            value: 'status',
+            },
+          ],
         };
     },
     methods: {
-        cancel() {
-      this.$router.push({ name: 'studentlist' })
-    },
+ async deleteStudentCourse(selected) {
+      let obj = selected[0];
+      let id = obj.id
+      console.log("here" + id)
+      if (obj.status == "Registered") {
+        if(confirm("Do you really want to delete?")){
+           courseServices.deleteStudentCourse(id)
+      .then(() => {
+         this.$router.push({ name: 'courses' }) 
+        })
+       
+        
+        .catch(error => {
+          console.log(error)
+        })
+      }
+      }
+      else {
+          alert("ERROR: Cannot remove course once start date has passed. Contact Registrar's Office for further assistance.");
 
+      }
+    
+},
+
+      viewStudentCourse(studentCourse) {
+     let id = studentCourse.id
+          this.$router.push({ name: 'studentcourselistedit', params: {id: id}})
+        .then(() => {
+        })
+        .catch(error => {
+         console.log(error)
+        })
+    },
+        cancel() {
+      this.$router.push({ name: 'courses' })
+    },
+     generatePDF() {
+    
+          const columns = [
+            { title: "Semester", dataKey: "semester" },
+            { title: "Start Date", dataKey: "semesterStartDate" },
+            { title: "Course Number", dataKey: "number" },
+            { title: "Course Name", dataKey: "name" },
+            { title: "Grade", dataKey: "grade" },
+            { title: "Status", dataKey:"status"}
+          ];
+          const doc = new jsPDF({
+            
+            orientation: "portrait",
+            unit: "in",
+            format: "letter"
+          });
+           let courseList = [];
+           this.studentCourses.forEach(function (studentCourse){
+              let course ={};
+              course.semester=studentCourse.semester.season;
+              course.semesterStartDate = studentCourse.semester.startDate.substring(0,4);
+              course.number=studentCourse.course.courseNum;
+              course.name=studentCourse.course.name;
+              course.grade=studentCourse.grade;
+              course.status=studentCourse.status;
+              courseList.push(course);
+            });
+           let header = "Degree Plan for: " + this.student.fName +" "+this.student.lName;
+           let currentDate = "As of: " + new Date(Date.now()).toLocaleDateString(); 
+           
+           
+           doc.addImage(img, "PNG", .55, .5, 7.4,2)
+           doc.autoTable({
+                headStyles: {
+                fillColor: [140, 0, 0],
+            },
+            margin: { top: 3.25 },
+            didDrawPage: function () { doc.text(.55, 3, header), doc.text(6.35, 3, currentDate)},
+            columns,
+            body: courseList,
+            
+           });
+           doc.save(`degreeplan.pdf`); 
+     },
         
     },
     async created() {
@@ -95,4 +215,3 @@ export default {
     }
   }
 </script>
-

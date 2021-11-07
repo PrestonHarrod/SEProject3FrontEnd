@@ -79,5 +79,19 @@ export default {
   },
   getDegreeCourse() {
     return apiClient.get('degreecourses/')
-  }
+  },
+  addCourseToStudentList(studentCourseList) {
+    return apiClient.post("studentCourses/", studentCourseList);
+  },
+  getStudentCourse(id) {
+    return apiClient.get("studentCourses/" + id);
+  },
+  updateStudentCourse(studentCourse) {
+    return apiClient.put("studentCourses/" + studentCourse.id, studentCourse);
+
+  },
+  deleteStudentCourse(studentCourseID) {
+    return apiClient.delete("studentCourses/" + studentCourseID);
+  },
+  
 };
