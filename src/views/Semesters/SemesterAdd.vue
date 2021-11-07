@@ -61,7 +61,7 @@
         
        </v-col>
        
-      <v-btn :style="{transform:'translateX(-50%)'}" v-on:click.prevent="addSemester()" text rounded>Submit</v-btn>
+      <v-btn v-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="addSemester()" text rounded>Submit</v-btn>
       <v-btn :style="{transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
     </v-form>
 </v-app>
@@ -72,15 +72,21 @@
 
 <script>
 import courseServices from '@/services/courseServices.js'
+import Utils from '@/config/utils.js'
+
 export default {
   data() {
     return {
+      user: {},
       items: ['Fall', 'Winter', 'Spring', 'Summer'],
       semester: { startDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
                   endDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)},
       menu: false,
       menu2: false,
     }
+  },
+  created() {
+    this.user = Utils.getStore('user')
   },
   methods: {
     addSemester() {

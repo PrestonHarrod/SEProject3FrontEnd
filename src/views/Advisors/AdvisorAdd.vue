@@ -13,7 +13,7 @@
             <v-text-field label="Department" placeholder="Computer Science" v-model="advisor.dept" type="text" id="advisorLevel"/>
        
        </v-col>
-      <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="addAdvisor()" text rounded>Submit</v-btn>
+      <v-btn v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="addAdvisor()" text rounded>Submit</v-btn>
       <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
     </v-form>
     
@@ -24,11 +24,17 @@
 
 <script>
 import courseServices from '@/services/courseServices.js'
+import Utils from '@/config/utils.js'
+
 export default {
   data() {
     return {
+      user: {},
       advisor: {}
     }
+  },
+  created() {
+    this.user = Utils.getStore('user')
   },
   methods: {
     addAdvisor() {
