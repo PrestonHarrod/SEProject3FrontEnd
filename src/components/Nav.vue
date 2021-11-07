@@ -18,8 +18,11 @@
     <v-btn text v-if='getAuth() > 0' v-on:click.prevent="goToSemesters()">
       Semesters
     </v-btn>
-    <v-btn text v-on:click.prevent="goToLogin()">
+    <v-btn v-if='getAuth() == 0' text v-on:click.prevent="goToLogin()">
       Login
+    </v-btn>
+    <v-btn v-else text v-on:click.prevent="goToLogin()">
+      Logout
     </v-btn>
   </v-app-bar>
 </template>
@@ -91,12 +94,15 @@ export default ({
         })
       },
       goToLogin() {
+        if(this.user == null){
+        console.log('testing');
           this.$router.push({ name: 'login'})
-        .then(() => {
-        })
-        .catch(error => {
-         console.log(error)
-        })
+        }
+        else {
+          Utils.setStore('user', null)
+          this.$router.push({ name: 'home'})
+          location.reload();
+        }
       },
     }
 });
