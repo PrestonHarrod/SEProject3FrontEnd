@@ -4,7 +4,7 @@
     <H1 style="background-color: #811429; color:#f2f2f2">Student List</H1>
     <br>
     <br>
-     <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Student</v-btn></h2>
+     <h2><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Student</v-btn></h2>
   <br>
 
      <v-card width="100vw">
@@ -34,13 +34,14 @@
 
 <script>
 import courseServices from '@/services/courseServices.js'
-
+import Utils from '@/config/utils.js';
 
 export default {
     components: {},
 
     data() {
         return {
+          user: {},
            search: '',
           headers: [
             {
@@ -70,7 +71,7 @@ export default {
         };
     },
   created() {
-
+      this.user = Utils.getStore('user');
       courseServices.getStudents() 
       .then(response => {
         this.students = response.data
@@ -91,6 +92,7 @@ export default {
    viewStudent(student) {
      let id = student.studentID
      console.log(student + "here")
+     if(this.user.advisorID != null)
           this.$router.push({ name: 'viewStudent', params: {id: id}})
         .then(() => {
         })

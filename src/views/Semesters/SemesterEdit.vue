@@ -1,10 +1,10 @@
 <template>
   <div>
     <H1 style="background-color: #811429; color:#f2f2f2">Semester Edit</H1>
-  <v-app>
-    <v-form>
-        <v-col>
-            <v-menu
+<v-app>
+<v-form>
+    <v-col>
+      <v-menu
         v-model="menu"
         :close-on-content-click="false"
         :nudge-right="40"
@@ -59,14 +59,16 @@
           label="Season"
         ></v-select>
        </v-col>
-      <v-btn :style="{transform:'translateX(-50%)'}" v-on:click.prevent="updateSemester()" text rounded>Submit</v-btn>
+       
+      <v-btn v-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="updateSemester()" text rounded>Submit</v-btn>
       <v-btn :style="{transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
     </v-form>
-    </v-app>
+</v-app>
   </div>
 </template>
 <script>
 import courseServices from '@/services/courseServices.js'
+import Utils from '@/config/utils.js'
 
 export default {
   props: ['id'],
@@ -75,6 +77,7 @@ export default {
   },
   data() {
     return {
+      user: {},
       items: ['Fall', 'Winter', 'Spring', 'Summer'],
       semester: { startDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
                   endDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)},
@@ -83,6 +86,7 @@ export default {
     }
   },
   created() {
+      this.user = Utils.getStore('user')
       courseServices.getSemester(this.id)
       .then(response => {
         this.semester = response.data;

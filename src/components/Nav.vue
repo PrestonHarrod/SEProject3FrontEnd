@@ -3,19 +3,19 @@
     <button v-on:click.prevent="goToHome()">
       <img alt="Vue logo" src="../assets/logo.png" contain height="50" width="80">
     </button>
-    <v-btn text v-on:click.prevent="goToStudents()">
+    <v-btn text v-if='getAuth() > 0' v-on:click.prevent="goToStudents()">
       Students
     </v-btn>
-    <v-btn text v-on:click.prevent="goToAdvisors()">
-      Advisors
+    <v-btn text v-if='getAuth() > 1' v-on:click.prevent="goToAdvisors()">
+      Advisors 
     </v-btn>
-    <v-btn text v-on:click.prevent="goToCourses()">
+    <v-btn text v-if='getAuth() > 0' v-on:click.prevent="goToCourses()">
       Courses
     </v-btn>
-    <v-btn text v-on:click.prevent="goToDegrees()">
+    <v-btn text v-if='getAuth() > 0' v-on:click.prevent="goToDegrees()">
       Degrees
     </v-btn>
-    <v-btn text v-on:click.prevent="goToSemesters()">
+    <v-btn text v-if='getAuth() > 0' v-on:click.prevent="goToSemesters()">
       Semesters
     </v-btn>
     <v-btn text v-on:click.prevent="goToLogin()">
@@ -25,10 +25,23 @@
 </template>
 
 <script>
-
+import Utils from '../config/utils.js';
 export default ({
-    data: () => ({}),
+    data: () => ({
+      user: {},
+    }),
+    created() {
+        this.user = Utils.getStore('user');
+    },
     methods: {
+      getAuth() {
+        if(this.user == null)
+          return 0;
+        else if(this.user.advisorID != null)  
+          return 2;
+        else
+          return 1;
+      },
       goToHome() {
           this.$router.push({ name: 'home'})
         .then(() => {
