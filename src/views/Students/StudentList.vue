@@ -7,7 +7,6 @@
      <h2><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Student</v-btn></h2>
   <br>
   <h3><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToStudentCourses(selected)" color="black" text rounded>View Student's Courses</v-btn></h3>
-     <h4>{{selected}}</h4>
      <v-card width="100vw">
        <v-card-title>  
       <v-text-field
