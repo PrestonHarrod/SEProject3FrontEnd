@@ -97,6 +97,9 @@ export default ({
         if(this.user == null){
         console.log('testing');
           this.$router.push({ name: 'login'})
+          .catch(error => {
+            console.log(error)
+          })
         }
         else {
           Utils.setStore('user', null)
