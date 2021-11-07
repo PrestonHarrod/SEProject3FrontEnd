@@ -80,6 +80,7 @@ export default {
         })
         .catch(error => {
         console.log('There was an error:', error.response)
+        alert("ERROR:Edit student unsuccessful. Make sure that fields are entered correctly and that the Advisor ID and Degree ID exists in the system.");
         })
         
     },

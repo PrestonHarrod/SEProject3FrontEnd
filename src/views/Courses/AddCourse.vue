@@ -21,7 +21,9 @@
       <v-btn v-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="addCourse()" text rounded>Submit</v-btn>
       <v-btn v-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
     </v-form>
+
 </v-app>
+
 </div>
 </template>
 
@@ -35,6 +37,7 @@ export default {
       course: {},
       hoursItems: [0, 1, 2, 3, 4],
       levelItems: ['0000', '1000', '2000', '3000', '4000', '5000'],
+
     }
   },
   created() {
@@ -45,9 +48,11 @@ export default {
         courseServices.addCourse(this.course)
         .then(() => {
           this.$router.push({ name: 'courses' })
+          this.checkError(false);
         })
         .catch(error => {
           console.log(error)
+          alert("ERROR: Add course unsuccessful. Make sure that fields are entered correctly and that the Semester ID  exists in the system.");
         })
     },
     cancel() {

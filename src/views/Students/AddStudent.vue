@@ -1,7 +1,9 @@
 <template>
 <div>
 <H1 style="background-color: #811429; color:#f2f2f2">Student Add</H1>
+
 <v-app>
+
 <v-form>
         <v-col>
             <v-text-field label="First Name" placeholder="John" v-model="student.fName" type="text" id="fName" />
@@ -72,6 +74,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
+          alert("ERROR: Add student unsuccessful. Make sure that fields are entered correctly and that the Advisor ID and Degree ID exists in the system.");
         })
     },
     cancel() {

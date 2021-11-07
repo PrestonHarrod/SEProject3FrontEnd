@@ -86,6 +86,19 @@ export default {
       })
   },
   methods: {
+    next (page) {
+  
+  courseServices.getCourses(page * 50)
+    .then(response => {
+      
+      this.courses = response.data
+      console.log(this.page)
+    })
+    .catch(error => {
+      console.log(error)
+      alert("ERROR: retrieve courses failed");
+    })
+},
 
   goToAdd() {
     this.$router.push({ name: 'add'})
