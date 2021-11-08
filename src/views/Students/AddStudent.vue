@@ -41,7 +41,8 @@
             
             
        </v-col>
-      <v-btn v-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="addStudent()" text rounded>Submit</v-btn>
+      <v-btn v-if='user.adminID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="addStudent()" text rounded>Submit</v-btn>
+      <v-btn v-else-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="addStudent()" text rounded>Submit</v-btn>
       <v-btn :style="{transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
     </v-form>
 </v-app>   
