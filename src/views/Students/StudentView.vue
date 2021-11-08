@@ -3,10 +3,12 @@
 <H1 style="background-color: #811429; color:#f2f2f2">Student View</H1>
 <br>
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
-    <h3><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updatestudent(student)" text rounded>Edit</v-btn>
+    <h3><v-btn v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updatestudent(student)" text rounded>Edit</v-btn>
+    <v-btn v-else-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updatestudent(student)" text rounded>Edit</v-btn>
 
    <br>
-    <v-btn color="#E53935" v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteStudent(student)" text rounded>Delete</v-btn>
+    <v-btn color="#E53935" v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteStudent(student)" text rounded>Delete</v-btn>
+    <v-btn color="#E53935" v-else-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteStudent(student)" text rounded>Delete</v-btn>
 
    </h3>
   <v-form>
