@@ -5,6 +5,8 @@
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
     <h3><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateDegree(degree)" text rounded>Edit</v-btn>
    <br>
+    <v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="degreeCourses(degree)" text rounded>View Courses</v-btn>
+    <br>
     <v-btn color="#E53935" v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteDegree(degree)" text rounded>Delete</v-btn>
    </h3>
   <v-form>
@@ -53,6 +55,13 @@ export default {
   methods: {
     addForm(){
       this.viewDegreeDisplay = true;
+    },
+    degreeCourses(degree) {
+      this.$router.push({name: 'degreecourse', params: {id: degree.degreeID}})
+      .then(() => {
+      }).catch(error => {
+        console.log(error)
+      })
     },
 
     updateDegree(degree) {
