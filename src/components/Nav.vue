@@ -3,7 +3,7 @@
     <button v-on:click.prevent="goToHome()">
       <img alt="Vue logo" src="../assets/logo.png" contain height="50" width="80">
     </button>
-    <v-btn text v-if='getAuth() > 0' v-on:click.prevent="goToStudents()">
+    <v-btn text v-if='getAuth() > 1' v-on:click.prevent="goToStudents()">
       Students
     </v-btn>
     <v-btn text v-if='getAuth() > 1' v-on:click.prevent="goToAdvisors()">
@@ -40,10 +40,8 @@ export default ({
       getAuth() {
         if(this.user == null)
           return 0;
-        else if(this.user.adminID != null)
-        {
+        else if(this.user.adminID != null) 
           return 3;
-        }
         else if(this.user.advisorID != null)  
           return 2;
         else
