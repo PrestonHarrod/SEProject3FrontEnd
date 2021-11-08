@@ -40,6 +40,10 @@ export default ({
       getAuth() {
         if(this.user == null)
           return 0;
+        else if(this.user.adminID != null)
+        {
+          return 3;
+        }
         else if(this.user.advisorID != null)  
           return 2;
         else
