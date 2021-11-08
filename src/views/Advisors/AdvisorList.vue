@@ -33,10 +33,8 @@
 <script>
 import courseServices from '@/services/courseServices.js'
 import Utils from '@/config/utils.js';
-
 export default {
     components: {},
-
     data() {
         return {
           users: {},
@@ -69,7 +67,6 @@ export default {
           ],
             advisors: [
               {
-
               },
             ],
         };
@@ -100,7 +97,6 @@ export default {
    viewAdvisor(advisor) {
      let id = advisor.advisorID
      if(this.user.advisorID != null || this.user.adminID != null)
-
           this.$router.push({ name: 'viewAdvisor', params: {id: id}})
         .then(() => {
         })
@@ -110,7 +106,6 @@ export default {
     },
       
       },
-
   }
 </script>
 
@@ -124,5 +119,4 @@ th {
   text-align: left;
   font-size: 1.5rem !important;
 }
-
 </style>

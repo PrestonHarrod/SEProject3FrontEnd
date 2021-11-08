@@ -49,7 +49,6 @@
 import courseServices from '@/services/courseServices.js'
 import Utils from '@/config/utils.js';
 import StudentServices from '@/services/studentServices.js';
-
 export default {
     components: {},
     
@@ -114,12 +113,10 @@ export default {
   methods: { 
     goToDegreePlan(studentID) {
                  this.$router.push({ name: 'studentcourselist', params: {id:studentID} })
-
     },
     addToStudentCourseList(selected, studentID) {
       let studentCourseList = {};
       let obj = selected[0];
-
       //console.log(studentID + " " + obj.courseID + " " +  obj.semesterID + " " + null + " " +  null);
       
        studentCourseList.studentID = studentID;
@@ -141,8 +138,6 @@ export default {
            alert("ERROR: Add course unsuccessful. Make sure that fields are entered correctly and that the Semester ID  exists in the system.");
          })
     },
-
-
   goToAdd() {
     this.$router.push({ name: 'add'})
     .then(() => {
@@ -161,7 +156,6 @@ export default {
          console.log(error)
         })
     },
-
       
       },
        

@@ -39,7 +39,6 @@ export default {
       course: {},
       hoursItems: [0, 1, 2, 3, 4],
       levelItems: ['0000', '1000', '2000', '3000', '4000', '5000'],
-
     }
   },
   created() {

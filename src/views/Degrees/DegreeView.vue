@@ -27,7 +27,6 @@
 import courseServices from '@/services/courseServices.js'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import Utils from '@/config/utils.js'
-
 export default {
   props: ['id'],
   components: {ConfirmDialog},
@@ -56,7 +55,6 @@ export default {
     addForm(){
       this.viewDegreeDisplay = true;
     },
-
     updateDegree(degree) {
           this.$router.push({ name: 'editdegree', params: {id: degree.degreeID}})
         .then(() => {
@@ -68,7 +66,6 @@ export default {
     cancel() {
       this.$router.push({ name: 'degreelist' })
     },
-
      async deleteDegree(degree){
       let id = degree.degreeID
       if(confirm("Do you really want to delete?")){

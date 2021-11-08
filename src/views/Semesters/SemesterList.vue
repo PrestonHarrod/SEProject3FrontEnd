@@ -34,10 +34,8 @@
 <script>
 import courseServices from '@/services/courseServices.js'
 import Utils from '@/config/utils.js';
-
 export default {
     components: {},
-
     data() {
         return {
           user: {},
@@ -70,7 +68,6 @@ export default {
           ],
             semesters: [
               {
-
               },
             ],
           
@@ -109,7 +106,6 @@ export default {
   
       
       },
-
   }
 </script>
 
@@ -123,5 +119,4 @@ th {
   text-align: left;
   font-size: 1.5rem !important;
 }
-
 </style>

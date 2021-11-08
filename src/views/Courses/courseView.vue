@@ -28,7 +28,6 @@
 import courseServices from '@/services/courseServices.js'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import Utils from '@/config/utils.js'
-
 export default {
   props: ['id'],
   components: {ConfirmDialog},
@@ -71,7 +70,6 @@ export default {
     cancel() {
       this.$router.push({ name: 'courses' })
     },
-
     async deleteCourse(course){
       let id = course.courseID
       if(confirm("Do you really want to delete?")){

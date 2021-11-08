@@ -29,11 +29,9 @@
 <script>
 import courseServices from '@/services/courseServices.js'
 import Utils from '@/config/utils.js'
-
 export default {
   props: ['id'],
   components: {
-
   },
   data() {
     return {
@@ -52,7 +50,6 @@ export default {
       .catch(error => {
         console.log('There was an error:', error.response)
       })
-
   },
   methods: {
     

@@ -74,7 +74,6 @@
 <script>
 import courseServices from '@/services/courseServices.js'
 import Utils from '@/config/utils.js'
-
 export default {
   data() {
     return {
@@ -111,5 +110,4 @@ export default {
     font-size: .9rem;
     padding: 2px 5px;
 }
-
 </style>

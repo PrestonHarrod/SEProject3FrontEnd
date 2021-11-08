@@ -54,7 +54,6 @@
 <script>
 import courseServices from '@/services/courseServices.js'
 import Utils from '@/config/utils.js'
-
 export default {
   data() {
     return {
@@ -68,7 +67,6 @@ export default {
   },
   methods: {
     addStudent() {
-
         courseServices.addStudent(this.student)
         .then(() => {
           this.$router.push({ name: 'studentlist' })
