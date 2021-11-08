@@ -3,7 +3,7 @@
 <H1 style="background-color: #811429; color:#f2f2f2">Advisor View</H1>
 <br>
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
-    <h3><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateAdvisor(advisor)" text rounded>Edit</v-btn>
+    <h3><v-btn v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateAdvisor(advisor)" text rounded>Edit</v-btn>
     <br>
     <v-btn color="#E53935" v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteAdvisor(advisor)" text rounded>Delete</v-btn>
    </h3>
