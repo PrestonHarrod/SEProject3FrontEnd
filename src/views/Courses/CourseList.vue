@@ -4,11 +4,12 @@
     <H1 style="background-color: #811429; color:#f2f2f2">Course List</H1>
     <br>
     <br>
-     <h2><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Course</v-btn></h2>
+     <h2><v-btn v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Course</v-btn>
+     <v-btn v-else-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Course</v-btn></h2>
   <br>
-  <h3><v-btn v-if='user.studentID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToDegreePlan(user.studentID)" color="black" text rounded>View Degree Plan</v-btn></h3>
+  <h3><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToDegreePlan(user.studentID)" color="black" text rounded>View Degree Plan</v-btn></h3>
   <br>
-  <h4><v-btn v-if='user.studentID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="addToStudentCourseList(selected, user.studentID)" color="black" text rounded>Register Course</v-btn></h4>
+  <h4><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="addToStudentCourseList(selected, user.studentID)" color="black" text rounded>Register Course</v-btn></h4>
   
     
     <v-card width="100vw">
@@ -48,7 +49,6 @@
 import courseServices from '@/services/courseServices.js'
 import Utils from '@/config/utils.js';
 import StudentServices from '@/services/studentServices.js';
-
 export default {
     components: {},
     
@@ -113,12 +113,10 @@ export default {
   methods: { 
     goToDegreePlan(studentID) {
                  this.$router.push({ name: 'studentcourselist', params: {id:studentID} })
-
     },
     addToStudentCourseList(selected, studentID) {
       let studentCourseList = {};
       let obj = selected[0];
-
       //console.log(studentID + " " + obj.courseID + " " +  obj.semesterID + " " + null + " " +  null);
       
        studentCourseList.studentID = studentID;
@@ -140,8 +138,6 @@ export default {
            alert("ERROR: Add course unsuccessful. Make sure that fields are entered correctly and that the Semester ID  exists in the system.");
          })
     },
-
-
   goToAdd() {
     this.$router.push({ name: 'add'})
     .then(() => {
@@ -152,7 +148,7 @@ export default {
   },
    viewCourse(course) {
         let id = course.courseID
-        if(this.user.advisorID != null)
+     if(this.user.advisorID != null || this.user.adminID != null)
           this.$router.push({ name: 'view', params: {id: id}})
         .then(() => {
         })
@@ -160,7 +156,6 @@ export default {
          console.log(error)
         })
     },
-
       
       },
        

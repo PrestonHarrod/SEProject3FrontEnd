@@ -4,7 +4,7 @@
     <H1 style="background-color: #811429; color:#f2f2f2">Advisor List</H1>
     <br>
     <br>
-     <h2><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Advisor</v-btn></h2>
+     <h2><v-btn v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Advisor</v-btn></h2>
    <br>
      <v-card width="100vw">
        <v-card-title>
@@ -33,10 +33,8 @@
 <script>
 import courseServices from '@/services/courseServices.js'
 import Utils from '@/config/utils.js';
-
 export default {
     components: {},
-
     data() {
         return {
           users: {},
@@ -69,7 +67,6 @@ export default {
           ],
             advisors: [
               {
-
               },
             ],
         };
@@ -99,7 +96,7 @@ export default {
   },
    viewAdvisor(advisor) {
      let id = advisor.advisorID
-        if(this.user.advisorID != null)
+     if(this.user.advisorID != null || this.user.adminID != null)
           this.$router.push({ name: 'viewAdvisor', params: {id: id}})
         .then(() => {
         })
@@ -109,7 +106,6 @@ export default {
     },
       
       },
-
   }
 </script>
 
@@ -123,5 +119,4 @@ th {
   text-align: left;
   font-size: 1.5rem !important;
 }
-
 </style>

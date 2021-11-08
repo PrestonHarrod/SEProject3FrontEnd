@@ -1,14 +1,15 @@
 <template>
   <div>
     <H1 style="background-color: #811429; color:#f2f2f2">Degree Edit</H1>
-<!-- adding comment to push changes -->
+
     <v-form>
         <v-col>
             <v-text-field label="Department" v-model="degree.dept" type="text" id="department"/>
             <v-text-field label="Degree" v-model="degree.degree" type="text" id="degree" />
             <v-text-field label="Hours" v-model="degree.hours" type="text" id="hours"/>
        </v-col>
-      <v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateDegree()" text rounded>Submit</v-btn>
+      <v-btn v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateDegree()" text rounded>Submit</v-btn>
+      <v-btn v-else-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateDegree()" text rounded>Submit</v-btn>
       <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
     </v-form>
   </div>
@@ -16,12 +17,10 @@
 <script>
 import courseServices from '@/services/courseServices.js'
 import Utils from '@/config/utils.js'
-
 export default {
   user: {},
   props: ['id'],
   components: {
-
   },
   data() {
     return {
@@ -38,7 +37,6 @@ export default {
       .catch(error => {
         console.log('There was an error:', error.response)
       })
-
   },
   methods: {
     

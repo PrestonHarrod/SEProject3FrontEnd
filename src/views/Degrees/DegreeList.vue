@@ -4,7 +4,8 @@
     <H1 style="background-color: #811429; color:#f2f2f2">Degree List</H1>
     <br>
     <br>
-     <h2><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Degree</v-btn></h2>
+     <h2><v-btn v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Degree</v-btn>
+     <v-btn v-else-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Degree</v-btn></h2>
   <br>
    <v-card width="100vw">
        <v-card-title>  
@@ -33,11 +34,8 @@
 <script>
 import courseServices from '@/services/courseServices.js'
 import Utils from '@/config/utils.js';
-
 export default {
     components: {},
-
-
     data() {
         return {
           user: {},
@@ -64,7 +62,6 @@ export default {
           ],
             degrees: [
               {
-
             },
             ],
             
@@ -92,7 +89,7 @@ export default {
   },
    viewDegree(degree) {
      let id = degree.degreeID
-          if(this.user.advisorID != null)
+      if(this.user.advisorID != null || this.user.adminID != null)
             this.$router.push({ name: 'viewDegree', params: {id: id}})
         .then(() => {
         })
@@ -102,7 +99,6 @@ export default {
     },
       
       },
-
   }
 </script>
 
@@ -116,5 +112,4 @@ th {
   text-align: left;
   font-size: 1.5rem !important;
 }
-
 </style>
