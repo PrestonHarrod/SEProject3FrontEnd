@@ -36,7 +36,7 @@ export default {
           console.log('getAuthResponse', GoogleUser.getAuthResponse());
       
           var userInfo = {
-            email : GoogleUser.getBasicProfile().Wt,
+            email : GoogleUser.getBasicProfile().Tt,
             accessToken: GoogleUser.getAuthResponse().id_token
           };
           AuthServices.login(userInfo)
