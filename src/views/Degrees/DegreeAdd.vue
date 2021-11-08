@@ -45,6 +45,9 @@ export default {
     },
     cancel() {
       this.$router.push({ name: 'degreelist' })
+      //comment for autodeploy
+      //another one
+      
     },
   },
 }
