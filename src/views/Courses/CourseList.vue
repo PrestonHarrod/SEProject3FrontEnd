@@ -7,9 +7,9 @@
      <h2><v-btn v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Course</v-btn>
      <v-btn v-else-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Course</v-btn></h2>
   <br>
-  <h3><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToDegreePlan(user.studentID)" color="black" text rounded>View Degree Plan</v-btn></h3>
+  <h3><v-btn v-if='user.studentID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToDegreePlan(user.studentID)" color="black" text rounded>View Degree Plan</v-btn></h3>
   <br>
-  <h4><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="addToStudentCourseList(selected, user.studentID)" color="black" text rounded>Register Course</v-btn></h4>
+  <h4><v-btn v-if='user.studentID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="addToStudentCourseList(selected, user.studentID)" color="black" text rounded>Register Course</v-btn></h4>
   
     
     <v-card width="100vw">
