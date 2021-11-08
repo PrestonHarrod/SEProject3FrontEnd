@@ -100,6 +100,7 @@ export default {
    viewAdvisor(advisor) {
      let id = advisor.advisorID
      if(this.user.advisorID != null || this.user.adminID != null)
+
           this.$router.push({ name: 'viewAdvisor', params: {id: id}})
         .then(() => {
         })
