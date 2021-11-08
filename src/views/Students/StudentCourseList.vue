@@ -123,7 +123,7 @@ export default {
 
       viewStudentCourse(studentCourse) {
         let id = studentCourse.id
-         if (this.user != null && this.user.advisorID != null) {
+         if (this.user != null && (this.user.advisorID || this.user.adminID != null)) {
      
           this.$router.push({ name: 'studentcourselistedit', params: {id: id}})
         .then(() => {
