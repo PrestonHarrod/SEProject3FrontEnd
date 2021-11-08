@@ -7,7 +7,8 @@
     <h3><v-btn v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateCourse(course)" text rounded>Edit</v-btn>
     <v-btn v-else-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateCourse(course)" text rounded>Edit</v-btn>
     <br>
-    <v-btn color="#E53935" v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteCourse(course)" text rounded>Delete</v-btn>
+    <v-btn color="#E53935" v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteCourse(course)" text rounded>Delete</v-btn>
+    <v-btn color="#E53935" v-else-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteCourse(course)" text rounded>Delete</v-btn>
    </h3>
   <v-form>
         <v-col>
