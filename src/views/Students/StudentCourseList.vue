@@ -44,10 +44,7 @@
 import img from '@/assets/ocBanner.png';
 import StudentServices from '@/services/studentServices.js';
 import StudentCourseServices from '@/services/StudentCourseServices.js';
-<<<<<<< HEAD
-=======
 import courseServices from '@/services/courseServices.js'
->>>>>>> 7060d0d7dbc904f6ad696e567ff94b798ca20c6d
 import DegreeCourseServices from '@/services/DegreeCourseServices.js';
 import Utils from '@/config/utils.js';
 
@@ -66,15 +63,6 @@ export default {
             student: {},
             studentCourses : [],
             degreecourses: [],
-<<<<<<< HEAD
-            degreeCourses : [],
-            totalHours : 0,
-            majorHours : 0,
-            degree:{},
-            gpa : 0,
-            grades :[],
-            gpaGrades : ['A','B','C','D','F'], 
-=======
              search: '',
           headers: [
             {
@@ -108,7 +96,6 @@ export default {
             value: 'status',
             },
           ],
->>>>>>> 7060d0d7dbc904f6ad696e567ff94b798ca20c6d
         };
     },
     methods: {
