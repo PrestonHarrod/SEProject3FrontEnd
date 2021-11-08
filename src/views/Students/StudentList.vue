@@ -103,7 +103,7 @@ export default {
   },
    viewStudent(student) {
      let id = student.studentID
-     if(this.user.advisorID != null)
+     if(this.user.advisorID != null || this.user.adminID)
           this.$router.push({ name: 'viewStudent', params: {id: id}})
         .then(() => {
         })
