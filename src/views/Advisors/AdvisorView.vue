@@ -3,7 +3,9 @@
 <H1 style="background-color: #811429; color:#f2f2f2">Advisor View</H1>
 <br>
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
-    <h3><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateAdvisor(advisor)" text rounded>Edit</v-btn>
+    <h3><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateAdvisor(advisor)" text rounded>Edit</v-btn>
+    <br>
+    <v-btn color="#E53935" v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteAdvisor(advisor)" text rounded>Delete</v-btn>
    </h3>
   <v-form>
         <v-col>
@@ -13,22 +15,28 @@
             <v-text-field readonly label="Department" v-model="advisor.dept" type="text" id="advisorLevel"/>
        </v-col>
     </v-form>
+<confirm-dialog ref="confirmDialog"></confirm-dialog>
 
   </div>
 </template>
 
 <script>
 import courseServices from '@/services/courseServices.js'
+import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import Utils from '@/config/utils.js'
+
 export default {
   props: ['id'],
-  components: {},
+  components: {ConfirmDialog},
   data() {
     return {
+      user: {},
       advisor: {}
       
     }
   },
   created() {
+      this.user = Utils.getStore('user')
       courseServices.getAdvisor(this.id)
       .then(response => {
         this.advisor = response.data,
@@ -36,6 +44,7 @@ export default {
       })
       .catch(error => {
         console.log('There was an error:', error.response)
+        alert("Error getting advisor");
         
       })
         
@@ -53,25 +62,28 @@ export default {
         })
         .catch(error => {
          console.log(error)
+         alert("Error going to update failed");
         })
     },
     cancel() {
       this.$router.push({ name: 'advisorlist' })
     },
 
-    deleteAdvisor(id){
+     async deleteAdvisor(advisor){
+      let id = advisor.advisorID
+      if(confirm("Do you really want to delete?")){
     courseServices.deleteAdvisor(id)
       .then(() => {
-        this.advisors.forEach((advisor,i) => {
-          if (advisor.id == id) {
-            this.advisors.splice(i, 1);
-          }
+         this.$router.push({ name: 'advisorlist' }) 
         })
-          
-        })
+       
+        
         .catch(error => {
          this.message = error.response.data.message
+          alert("Error deleting advisor");
+
         })
+      }
     },
     
 }

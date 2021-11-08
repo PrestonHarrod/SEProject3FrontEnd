@@ -1,43 +1,29 @@
 <template>
-<v-container fluid fill-height> <!--fluid fill-height-->
+<v-container fluid fill-height>
   <div>
     <H1 style="background-color: #811429; color:#f2f2f2">Advisor List</H1>
     <br>
     <br>
-     <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Advisor</v-btn></h2>
- 
-  <br>
-   <v-pagination
-      v-model="page"
-      :length="62"
-      :total-visible="12"
-      @input="next"
-    ></v-pagination>
+     <h2><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Advisor</v-btn></h2>
    <br>
-    <v-card width="100vw">
-         <v-simple-table height="1000px" fixed-header>
-          <template v-slot:default>   
-            <thead>
-                <tr>
-                    <th>Advisor ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="advisor in advisors" :key="advisor.advisorID" :advisor="advisors">
-                    <td>{{advisor.advisorID}}</td>
-                    <td>{{advisor.fName}}</td>
-                    <td>{{advisor.lName}}</td>
-                    <td>{{advisor.email}}</td>
-                    <td><v-btn color="#66BB6A" @click="viewAdvisor(advisor)">Details</v-btn></td>
-                    <td><v-btn color="#E53935" @click="doDelete(advisors, advisor.advisorID)">Delete</v-btn></td>       
-                    <confirm-dialog ref="confirmDialog"></confirm-dialog>
-                </tr>
-            </tbody>
-            </template>
-        </v-simple-table>
+     <v-card width="100vw">
+       <v-card-title>
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search by First or Last Name"
+        single-line
+        hide-details
+      ></v-text-field>
+    </v-card-title>
+      <v-data-table
+        :headers="headers"
+        :items="advisors"
+        item-key="advisor.advisorID"
+        :items-per-page="25"
+        :search="search"
+        @click:row="viewAdvisor">
+      </v-data-table>
     </v-card>
   </div>
 </v-container>
@@ -45,41 +31,64 @@
 
 
 <script>
-//import CourseListDisplay from '@/components/CourseListDisplay.vue'
 import courseServices from '@/services/courseServices.js'
-import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import Utils from '@/config/utils.js';
 
 export default {
-    components: {ConfirmDialog},
+    components: {},
+
     data() {
         return {
-            advisors: {},
-            page: 1
+          users: {},
+           search: '',
+          headers: [
+            {
+            text: 'Advisor ID',
+            align: 'start',
+            filterable: false,
+            value: 'advisorID',
+            },
+            {
+            text: 'First Name',
+            align: 'start',
+            filterable: true,
+            value: 'fName'
+            },
+            {
+            text: 'Last Name',
+            align: 'start',
+            filterable: true,
+            value: 'lName',
+            },
+            {
+            text: 'Email',
+            align: 'start',
+            filterable: false,
+            value: 'email',
+            }
+          ],
+            advisors: [
+              {
+
+              },
+            ],
         };
     },
   created() {
-
-      courseServices.getAdvisors(this.page) 
+      this.user = Utils.getStore('user');
+      courseServices.getAdvisors() 
       .then(response => {
         this.advisors = response.data
       })
       .catch(error => {
         console.log(error)
+        alert("ERROR: Retrieve advisors failed.");
       })
   },
   methods: {
-    next (page) {
-  
-  courseServices.getAdvisors(page * 50)
-    .then(response => {
-      
-      this.advisors = response.data
-      console.log(this.page)
-    })
-    .catch(error => {
-      console.log(error)
-    })
-},
+  checkToken(){
+      return localStorage.getItem("token");
+  },
   goToAdd() {
     this.$router.push({ name: 'addAdvisor'})
     .then(() => {
@@ -89,29 +98,15 @@ export default {
         })
   },
    viewAdvisor(advisor) {
-          this.$router.push({ name: 'viewAdvisor', params: {id: advisor.advisorID}})
+     let id = advisor.advisorID
+        if(this.user.advisorID != null)
+          this.$router.push({ name: 'viewAdvisor', params: {id: id}})
         .then(() => {
         })
         .catch(error => {
          console.log(error)
         })
     },
-   async doDelete(advisors, id) {
-            if(confirm("Do you really want to delete?")){
-              console.log(id)
-                courseServices.deleteAdvisor(id)
-                .then(() => {
-        this.advisors.forEach((advisor,i) => {
-          if (advisor.advisorID == id) {
-            this.advisors.splice(i, 1);
-          }
-        })
-        })
-                .catch(error => {
-                    console.log(error);
-                })
-   }
-      },
       
       },
 

@@ -3,7 +3,9 @@
 <H1 style="background-color: #811429; color:#f2f2f2">Semester View</H1>
 <br>
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
-    <h3><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateSemester(semester)" text rounded>Edit</v-btn>
+    <h3><v-btn v-if='user.advisorID' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateSemester(semester)" text rounded>Edit</v-btn>
+   <br>
+    <v-btn v-if='user.advisorID != null' color="#E53935" :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteSemester(semester)" text rounded>Delete</v-btn>
    </h3>
   <v-form>
         <v-col>
@@ -12,22 +14,27 @@
             <v-text-field readonly label="Season" v-model="semester.season" type="text" id="season"/>
        </v-col>
     </v-form>
-
+<confirm-dialog ref="confirmDialog"></confirm-dialog>
   </div>
 </template>
 
 <script>
 import courseServices from '@/services/courseServices.js'
+import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import Utils from '@/config/utils.js'
+
 export default {
   props: ['id'],
-  components: {},
+  components: {ConfirmDialog},
   data() {
     return {
+      user: {},
       semester: {}
       
     }
   },
   created() {
+      this.user = Utils.getStore('user')
       courseServices.getSemester(this.id)
       
       .then(response => {
@@ -56,19 +63,19 @@ export default {
       this.$router.push({ name: 'semesterlist' })
     },
 
-    deleteSemester(id){
+     async deleteSemester(semester){
+      let id = semester.semesterID
+      if(confirm("Do you really want to delete?")){
     courseServices.deleteSemester(id)
       .then(() => {
-        this.semesters.forEach((semester,i) => {
-          if (semester.id == id) {
-            this.semesters.splice(i, 1);
-          }
+         this.$router.push({ name: 'semesterlist' }) 
         })
-          
-        })
+       
+        
         .catch(error => {
-         this.message = error.response.data.message
+          console.log(error)
         })
+      }
     },
     
 }

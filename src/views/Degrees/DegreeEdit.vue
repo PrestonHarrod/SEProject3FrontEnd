@@ -8,15 +8,17 @@
             <v-text-field label="Degree" v-model="degree.degree" type="text" id="degree" />
             <v-text-field label="Hours" v-model="degree.hours" type="text" id="hours"/>
        </v-col>
-      <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateDegree()" text rounded>Submit</v-btn>
+      <v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateDegree()" text rounded>Submit</v-btn>
       <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
     </v-form>
   </div>
 </template>
 <script>
 import courseServices from '@/services/courseServices.js'
+import Utils from '@/config/utils.js'
 
 export default {
+  user: {},
   props: ['id'],
   components: {
 
@@ -24,9 +26,11 @@ export default {
   data() {
     return {
       degree: {},
+      //autodeploy another test
     }
   },
   created() {
+      this.user = Utils.getStore('user')
       courseServices.getDegree(this.id)
       .then(response => {
         this.degree = response.data;
@@ -48,6 +52,7 @@ export default {
         })
         .catch(error => {
         console.log('There was an error:', error.response)
+        alert("ERROR: Edit degree unsuccessful. alert. Make sure that fields are entered correctly");
         })
         
     },

@@ -1,45 +1,43 @@
 <template>
-<v-container fluid fill-height> <!--fluid fill-height-->
+<v-container fluid fill-height>
   <div>
     <H1 style="background-color: #811429; color:#f2f2f2">Course List</H1>
     <br>
     <br>
-     <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Course</v-btn></h2>
+     <h2><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Course</v-btn></h2>
   <br>
+  <h3><v-btn v-if='user.studentID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToDegreePlan(user.studentID)" color="black" text rounded>View Degree Plan</v-btn></h3>
+  <br>
+  <h4><v-btn v-if='user.studentID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="addToStudentCourseList(selected, user.studentID)" color="black" text rounded>Register Course</v-btn></h4>
   
-   <v-pagination
-      v-model="page"
-      :length="62"
-      :total-visible="12"
-      @input="next"
-    ></v-pagination>
-  <br>
+    
     <v-card width="100vw">
-         <v-simple-table height="1000px" fixed-header>
-          <template v-slot:default>   
-            <thead>
-                <tr>
-                    <th>Course Name</th>
-                    <th>Course number</th>
-                    <th>Hours</th>
-                    <th>Level</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="course in courses" :key="course.courseID" :course="course">
-                    <td>{{course.name}}</td>
-                    <td>{{course.courseNum}}</td>
-                    <td>{{course.hours}}</td>
-                    <td>{{course.level}}</td>
-                    <td><v-btn color="#66BB6A" @click="viewCourse(course.courseID)">Details</v-btn></td>
-                    <td><v-btn color="#E53935" @click="doDelete(courses, course.courseID)">Delete</v-btn></td>       
-                    <confirm-dialog ref="confirmDialog"></confirm-dialog>
-                </tr>
-            </tbody>
-            </template>
-        </v-simple-table>
+       <v-card-title>
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search by Course Name or Number"
+        single-line
+        hide-details
+      ></v-text-field>
+    </v-card-title>
+      <v-data-table
+        v-model="selected"
+        :headers="headers"
+        :items="courses"
+        item-key="name"
+        :items-per-page="25"
+      
+        :single-select="singleSelect"
+        show-select
+        :search="search"
+        @click:row="viewCourse"
+        class="elevation-1"
+        >
+         
+
+    
+      </v-data-table>
     </v-card>
   </div>
 </v-container>
@@ -47,40 +45,103 @@
 
 
 <script>
-//import CourseListDisplay from '@/components/CourseListDisplay.vue'
 import courseServices from '@/services/courseServices.js'
-import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import Utils from '@/config/utils.js';
+import StudentServices from '@/services/studentServices.js';
+
 export default {
-    components: {ConfirmDialog},
+    components: {},
+    
     data() {
         return {
-            courses: {},
-            page: 1
+          selected: [],
+          studentCourseList: {},
+          user: {},
+           singleSelect: true,
+          search: '',
+          headers: [
+            {
+            text: 'Course Name',
+            align: 'start',
+            filterable: true,
+            //sortable: false,
+            value: 'name',
+            },
+            {
+            text: 'Course Number',
+            align: 'start',
+            filterable: true,
+            value: 'courseNum'
+            },
+            {
+            text: 'Hours',
+            align: 'start',
+            filterable: false,
+            value: 'hours',
+            },
+            {
+            text: 'Level',
+            align: 'start',
+            filterable: false,
+            value: 'level',
+            }
+          ],
+            courses: [
+             
+              {
+                
+              }
+            ],
+           
         };
     },
+    
   created() {
-
-      courseServices.getCourses(this.page) 
+      
+       this.user = Utils.getStore('user')
+       StudentServices.getStudent(this.user.studentID)
+      courseServices.getCourses()
       .then(response => {
         this.courses = response.data
+       
       })
       .catch(error => {
         console.log(error)
       })
-  },
-  methods: {
-    next (page) {
   
-  courseServices.getCourses(page * 50)
-    .then(response => {
+  },
+  methods: { 
+    goToDegreePlan(studentID) {
+                 this.$router.push({ name: 'studentcourselist', params: {id:studentID} })
+
+    },
+    addToStudentCourseList(selected, studentID) {
+      let studentCourseList = {};
+      let obj = selected[0];
+
+      //console.log(studentID + " " + obj.courseID + " " +  obj.semesterID + " " + null + " " +  null);
       
-      this.courses = response.data
-      console.log(this.page)
-    })
-    .catch(error => {
-      console.log(error)
-    })
-},
+       studentCourseList.studentID = studentID;
+       studentCourseList.courseID = obj.courseID;
+       studentCourseList.semesterID = obj.semesterID;
+       studentCourseList.grade = null;
+       if (studentCourseList.grade == null) {
+       studentCourseList.status = "Registered";
+       }
+      
+      
+       courseServices.addCourseToStudentList(studentCourseList)
+         .then(() => {
+           this.$router.push({ name: 'studentcourselist', params: {id:studentID} })
+           //this.checkError(false);
+         })
+         .catch(error => {
+           console.log(error)
+           alert("ERROR: Add course unsuccessful. Make sure that fields are entered correctly and that the Semester ID  exists in the system.");
+         })
+    },
+
+
   goToAdd() {
     this.$router.push({ name: 'add'})
     .then(() => {
@@ -90,33 +151,20 @@ export default {
         })
   },
    viewCourse(course) {
-     
-          this.$router.push({ name: 'view', params: {id: course}})
+        let id = course.courseID
+        if(this.user.advisorID != null)
+          this.$router.push({ name: 'view', params: {id: id}})
         .then(() => {
         })
         .catch(error => {
          console.log(error)
         })
     },
-   async doDelete(students, id) {
-            if(confirm("Do you really want to delete?")){
-                courseServices.deleteCourse(id)
-                .then(() => {
-        this.courses.forEach((course,i) => {
-          if (course.courseID == id) {
-            this.courses.splice(i, 1);
-          }
-        })
-        })
-                .catch(error => {
-                    console.log(error);
-                })
-   }
-      },
+
       
       },
-
-  }
+       
+}
 </script>
 
 <style>
@@ -129,5 +177,4 @@ th {
   text-align: left;
   font-size: 1.5rem !important;
 }
-
 </style>

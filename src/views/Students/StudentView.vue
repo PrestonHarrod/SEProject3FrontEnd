@@ -3,8 +3,11 @@
 <H1 style="background-color: #811429; color:#f2f2f2">Student View</H1>
 <br>
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
-    <h3><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updatestudent(student)" text rounded>Edit</v-btn>
-    <h3><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="viewCourses(student)" text rounded>View Courses</v-btn></h3>
+    <h3><v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updatestudent(student)" text rounded>Edit</v-btn>
+
+   <br>
+    <v-btn color="#E53935" v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteStudent(student)" text rounded>Delete</v-btn>
+
    </h3>
   <v-form>
         <v-col>
@@ -17,22 +20,27 @@
              <v-text-field readonly label="Email" v-model="student.email" type="text" id="email" />
        </v-col>
     </v-form>
-
+<confirm-dialog ref="confirmDialog"></confirm-dialog>
   </div>
 </template>
 
 <script>
 import courseServices from '@/services/courseServices.js'
+import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import Utils from '@/config/utils.js'
+
 export default {
   props: ['id'],
-  components: {},
+  components: {ConfirmDialog},
   data() {
     return {
+      user: {},
       student: {}
       
     }
   },
   created() {
+    this.user = Utils.getStore('user')
     console.log(this.id + "here again")
       courseServices.getStudent(this.id)
       
@@ -50,14 +58,7 @@ export default {
     addForm(){
       this.addStudentDisplay = true;
     },
-    viewCourses(student) {
-          this.$router.push({ name: 'studentcourselist', params: {id: student.studentID}})
-        .then(() => {
-        })
-        .catch(error => {
-         console.log(error)
-        })
-    },
+   
     updatestudent(student) {
           this.$router.push({ name: 'editstudent', params: {id: student.studentID}})
         .then(() => {
@@ -70,19 +71,19 @@ export default {
       this.$router.push({ name: 'studentlist' })
     },
 
-    deletestudent(id){
+    async deleteStudent(student){
+      let id = student.studentID
+      if(confirm("Do you really want to delete?")){
     courseServices.deleteStudent(id)
       .then(() => {
-        this.students.forEach((student,i) => {
-          if (student.id == id) {
-            this.students.splice(i, 1);
-          }
+         this.$router.push({ name: 'studentlist' }) 
         })
-          
-        })
+       
+        
         .catch(error => {
-         this.message = error.response.data.message
+          console.log(error)
         })
+      }
     },
     
 }

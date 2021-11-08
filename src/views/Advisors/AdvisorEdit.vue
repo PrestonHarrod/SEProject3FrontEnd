@@ -9,15 +9,17 @@
             <v-text-field label="Email" v-model="advisor.email" type="text" id="advisorLevel"/>
             <v-text-field label="Department" v-model="advisor.dept" type="text" id="advisorLevel"/>
        </v-col>
-      <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateAdvisor()" text rounded>Submit</v-btn>
+      <v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateAdvisor()" text rounded>Submit</v-btn>
       <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
     </v-form>
   </div>
 </template>
 <script>
 import courseServices from '@/services/courseServices.js'
+import Utils from '@/config/utils.js'
 
 export default {
+  user: {},
   props: ['id'],
   components: {
 
@@ -28,12 +30,14 @@ export default {
     }
   },
   created() {
+      this.user = Utils.getStore('user')
       courseServices.getAdvisor(this.id)
       .then(response => {
         this.advisor = response.data;
       })
       .catch(error => {
         console.log('There was an error:', error.response)
+        alert("ERROR: Add advisor unsuccessful. Make sure that fields are entered correctly.");
       })
 
   },

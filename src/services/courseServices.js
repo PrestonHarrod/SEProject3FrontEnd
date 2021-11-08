@@ -2,8 +2,8 @@ import {apiClient} from './apiClient.js'
 
 
 export default {
-  getCourses(index) {
-    return apiClient.get("courses?index=" + index);
+  getCourses() {
+    return apiClient.get("/courses");
   },
   getCourse(id) {
     return apiClient.get("courses/" + id);
@@ -79,5 +79,19 @@ export default {
   },
   getDegreeCourse() {
     return apiClient.get('degreecourses/')
-  }
+  },
+  addCourseToStudentList(studentCourseList) {
+    return apiClient.post("studentCourses/", studentCourseList);
+  },
+  getStudentCourse(id) {
+    return apiClient.get("studentCourses/" + id);
+  },
+  updateStudentCourse(studentCourse) {
+    return apiClient.put("studentCourses/" + studentCourse.id, studentCourse);
+
+  },
+  deleteStudentCourse(studentCourseID) {
+    return apiClient.delete("studentCourses/" + studentCourseID);
+  },
+  
 };
