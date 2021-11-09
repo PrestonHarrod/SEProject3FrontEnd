@@ -28,6 +28,7 @@
 <script>
 import courseServices from '@/services/courseServices.js'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import DegreeCourseServices from '@/services/DegreeCourseServices.js'
 import Utils from '@/config/utils.js'
 export default {
   props: ['id'],
@@ -78,13 +79,19 @@ export default {
      async deleteDegree(degree){
       let id = degree.degreeID
       if(confirm("Do you really want to delete?")){
-    courseServices.deleteDegree(id)
+        DegreeCourseServices.deleteAllDegreeCourseForCourse(id)
+        .then(() => {
+          
+          courseServices.deleteDegree(id)
       .then(() => {
          this.$router.push({ name: 'degreelist' }) 
         })
        
         
         .catch(error => {
+          console.log(error)
+        })
+        }).catch(error => {
           console.log(error)
         })
       }
