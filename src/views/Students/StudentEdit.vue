@@ -35,7 +35,8 @@
     <v-text-field label="Major" placeholder="Computer Science" v-model="student.major" type="text" id="major"/>
     <v-text-field label="Degree" v-model="student.degreeID" type="text" id="degreeID"/> 
   </v-col>
-  <v-btn v-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="updateStudent()" text rounded>Submit</v-btn>
+  <v-btn v-if='user.adminID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="updateStudent()" text rounded>Submit</v-btn>
+  <v-btn v-else-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="updateStudent()" text rounded>Submit</v-btn>
   <v-btn :style="{transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
 </v-form>
 </v-app>   
@@ -44,11 +45,9 @@
 <script>
 import courseServices from '@/services/courseServices.js'
 import Utils from '@/config/utils.js'
-
 export default {
   props: ['id'],
   components: {
-
   },
   data() {
     return {
@@ -66,7 +65,6 @@ export default {
       .catch(error => {
         console.log('There was an error:', error.response)
       })
-
   },
   methods: {
     

@@ -19,7 +19,8 @@
           ></v-select>
           <v-textarea label="Description" v-model="course.desc" type="text" id="courseDescription" />
        </v-col>
-      <v-btn v-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="updateCourse()" text rounded>Submit</v-btn>
+      <v-btn v-if='user.adminID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="updateCourse()" text rounded>Submit</v-btn>
+      <v-btn v-else-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="updateCourse()" text rounded>Submit</v-btn>
       <v-btn :style="{transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
     </v-form>
     </v-app>
@@ -28,11 +29,9 @@
 <script>
 import courseServices from '@/services/courseServices.js'
 import Utils from '@/config/utils.js'
-
 export default {
   props: ['id'],
   components: {
-
   },
   data() {
     return {
@@ -51,7 +50,6 @@ export default {
       .catch(error => {
         console.log('There was an error:', error.response)
       })
-
   },
   methods: {
     

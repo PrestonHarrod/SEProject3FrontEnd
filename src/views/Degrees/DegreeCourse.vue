@@ -1,6 +1,5 @@
 <template>
   <div>
-     
 <H1 style="background-color: #811429; color:#f2f2f2">{{degree.degree + ' ' + "'s Courses"}}</H1>
 <br>
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
@@ -30,7 +29,6 @@
 </template>
 
 <script>
-//import Nav from '@/components/Nav.vue'
 // import StudentServices from '@/services/studentServices.js';
 // import StudentCourseServices from '@/services/StudentCourseServices.js';
 import courseServices from '@/services/courseServices.js'
@@ -38,7 +36,7 @@ import courseServices from '@/services/courseServices.js'
 import DegreeCourseServices from '@/services/DegreeCourseServices.js';
 export default {
     components: {
-        //Nav
+        
     },
     props :['id'],
     data() {

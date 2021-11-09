@@ -60,6 +60,7 @@ export default {
     return apiClient.put("degrees/" + degree.degreeID, degree);
   },
   deleteDegree(degreeID) {
+    console.log(degreeID)
     return apiClient.delete("degrees/" + degreeID);
   },
   getSemesters(index) {

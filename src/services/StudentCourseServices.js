@@ -18,7 +18,7 @@ export default {
     return apiClient.put("studentcourses/" + studentCourse.id, studentCourse);
   },
   deleteStudentCourse(id) {
-    return apiClient.delete("studentcourses/" + id);
+    return apiClient.delete("studentcourses?courseID=" + id);
   }
 
 };

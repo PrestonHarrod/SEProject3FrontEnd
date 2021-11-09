@@ -46,7 +46,6 @@ import StudentCourseServices from '@/services/StudentCourseServices.js';
 import courseServices from '@/services/courseServices.js'
 import DegreeCourseServices from '@/services/DegreeCourseServices.js';
 import Utils from '@/config/utils.js';
-
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 export default {
@@ -116,14 +115,12 @@ export default {
       }
       else {
           alert("ERROR: Cannot remove course once start date has passed. Contact Registrar's Office for further assistance.");
-
       }
     
 },
-
       viewStudentCourse(studentCourse) {
         let id = studentCourse.id
-         if (this.user != null && this.user.advisorID != null) {
+         if (this.user != null && (this.user.advisorID || this.user.adminID != null)) {
      
           this.$router.push({ name: 'studentcourselistedit', params: {id: id}})
         .then(() => {
@@ -134,7 +131,6 @@ export default {
          }
          else {
           alert("ERROR: Do not have permissions to edit");
-
          }
     },
         cancel() {

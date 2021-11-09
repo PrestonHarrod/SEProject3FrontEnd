@@ -3,9 +3,11 @@
 <H1 style="background-color: #811429; color:#f2f2f2">Semester View</H1>
 <br>
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
-    <h3><v-btn v-if='user.advisorID' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateSemester(semester)" text rounded>Edit</v-btn>
+    <h3><v-btn v-if='user.adminID' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateSemester(semester)" text rounded>Edit</v-btn>
+    <v-btn v-else-if='user.advisorID' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateSemester(semester)" text rounded>Edit</v-btn>
    <br>
-    <v-btn v-if='user.advisorID != null' color="#E53935" :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteSemester(semester)" text rounded>Delete</v-btn>
+    <v-btn v-if='user.adminID != null' color="#E53935" :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteSemester(semester)" text rounded>Delete</v-btn>
+    <v-btn v-else-if='user.advisorID != null' color="#E53935" :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteSemester(semester)" text rounded>Delete</v-btn>
    </h3>
   <v-form>
         <v-col>
@@ -22,7 +24,6 @@
 import courseServices from '@/services/courseServices.js'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
 import Utils from '@/config/utils.js'
-
 export default {
   props: ['id'],
   components: {ConfirmDialog},
@@ -62,7 +63,6 @@ export default {
     cancel() {
       this.$router.push({ name: 'semesterlist' })
     },
-
      async deleteSemester(semester){
       let id = semester.semesterID
       if(confirm("Do you really want to delete?")){

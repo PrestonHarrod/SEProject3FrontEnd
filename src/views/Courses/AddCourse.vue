@@ -18,8 +18,10 @@
           ></v-select>
           <v-textarea label="Description" placeholder="This is a description of a course" v-model="course.desc" type="text" id="courseDescription" />
        </v-col>
-      <v-btn v-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="addCourse()" text rounded>Submit</v-btn>
-      <v-btn v-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
+      <v-btn v-if='user.adminID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="addCourse()" text rounded>Submit</v-btn>
+      <v-btn v-else-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="addCourse()" text rounded>Submit</v-btn>
+      <v-btn v-if='user.adminID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
+      <v-btn v-else-if='user.advisorID != null' :style="{transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
     </v-form>
 
 </v-app>
@@ -37,7 +39,6 @@ export default {
       course: {},
       hoursItems: [0, 1, 2, 3, 4],
       levelItems: ['0000', '1000', '2000', '3000', '4000', '5000'],
-
     }
   },
   created() {

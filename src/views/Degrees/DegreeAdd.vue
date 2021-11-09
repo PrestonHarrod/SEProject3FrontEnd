@@ -8,7 +8,8 @@
             <v-text-field label="Degree" placeholder="Computer Science w/ Business" v-model="degree.degree" type="text" id="degree" />
             <v-text-field label="Hours" placeholder="100" v-model="degree.hours" type="text" id="hours"/>
        </v-col>
-      <v-btn v-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="addDegree()" text rounded>Submit</v-btn>
+      <v-btn v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="addDegree()" text rounded>Submit</v-btn>
+      <v-btn v-else-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="addDegree()" text rounded>Submit</v-btn>
       <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Cancel</v-btn>
     </v-form>
     
@@ -20,7 +21,6 @@
 <script>
 import courseServices from '@/services/courseServices.js'
 import Utils from '@/config/utils.js'
-
 export default {
   data() {
     return {
