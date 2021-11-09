@@ -8,7 +8,7 @@
  
  <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="generatePDF()"  color="black"  text rounded>Print Degree Plan</v-btn>
  <br>
- <v-btn color="#E53935" :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteStudentCourse(selected)" text rounded>Remove Course</v-btn>
+ <v-btn v-if="selected[0] != null" color="#E53935" :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteStudentCourse(selected)" text rounded>Remove Course</v-btn>
 
   <v-card width="100vw">
        <v-card-title>
