@@ -21,10 +21,10 @@ export default {
     return apiClient.put("degreecourses/" + degreeCourse.id, degreeCourse);
   },
   deleteAllDegreeCourseForCourse(id) {
-    return apiClient.delete("degreecourses?course=" + id);
+    return apiClient.delete("degreecourses?degreeID=" + id);
   },
   deleteDegreeCourse(id) {
-    return apiClient.delete("degreecourses/" + id);
+    return apiClient.delete("degreecourses?degreeID=" + id);
   }
 
 };

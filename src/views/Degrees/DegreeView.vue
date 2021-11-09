@@ -6,6 +6,8 @@
     <h3><v-btn v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateDegree(degree)" text rounded>Edit</v-btn>
     <v-btn v-else-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateDegree(degree)" text rounded>Edit</v-btn>
    <br>
+   <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="degreeCourses(degree)" text rounded>View Courses</v-btn>
+    <br>
     <v-btn color="#E53935" v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteDegree(degree)" text rounded>Delete</v-btn>
      <v-btn color="#E53935" v-else-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteDegree(degree)" text rounded>Delete</v-btn>
    </h3>
@@ -26,6 +28,7 @@
 <script>
 import courseServices from '@/services/courseServices.js'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
+import DegreeCourseServices from '@/services/DegreeCourseServices.js'
 import Utils from '@/config/utils.js'
 export default {
   props: ['id'],
@@ -63,19 +66,32 @@ export default {
          console.log(error)
         })
     },
+    degreeCourses(degree) {
+      this.$router.push({name: 'degreecourse', params: {id: degree.degreeID}})
+      .then(() => {
+      }).catch(error => {
+        console.log(error)
+      })
+    },
     cancel() {
       this.$router.push({ name: 'degreelist' })
     },
      async deleteDegree(degree){
       let id = degree.degreeID
       if(confirm("Do you really want to delete?")){
-    courseServices.deleteDegree(id)
+        DegreeCourseServices.deleteAllDegreeCourseForCourse(id)
+        .then(() => {
+          
+          courseServices.deleteDegree(id)
       .then(() => {
          this.$router.push({ name: 'degreelist' }) 
         })
        
         
         .catch(error => {
+          console.log(error)
+        })
+        }).catch(error => {
           console.log(error)
         })
       }
