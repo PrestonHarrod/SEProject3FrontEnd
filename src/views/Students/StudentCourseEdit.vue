@@ -1,17 +1,24 @@
 <template>
   <div>
     <H1 style="background-color: #811429; color:#f2f2f2">Student Course Edit</H1>
-
+  <v-app>
     <v-form>
         <v-col>
-            <v-text-field label="Grade" v-model="studentCourse.grade" type="text" id="grade"/>
-            <v-text-field label="Status" v-model="studentCourse.status" type="text" id="status"/>
+        <v-select id='grade' v-model="studentCourse.grade"
+          :items= "gradeItems" 
+          label="Grade"
+        ></v-select>
+        <v-select  id='status' v-model="studentCourse.status"
+          :items= "statusItems" 
+          label="Status"
+        ></v-select>
            
 
        </v-col>
-      <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="updateGrade(studentCourse.studentID)" text rounded>Submit</v-btn>
-      <v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel(studentCourse.studentID)" color="black" text rounded>Cancel</v-btn>
+      <v-btn :style="{transform:'translateX(-50%)'}" v-on:click.prevent="updateGrade(studentCourse.studentID)" text rounded>Submit</v-btn>
+      <v-btn :style="{transform:'translateX(-50%)'}" v-on:click.prevent="cancel(studentCourse.studentID)" color="black" text rounded>Cancel</v-btn>
     </v-form>
+  </v-app>
   </div>
 </template>
 <script>
@@ -25,6 +32,8 @@ export default {
   data() {
     return {
       studentCourse: {},
+      gradeItems: ['A', 'B', 'C', 'D', 'F'],
+      statusItems: ['Registered', 'In Progress', 'Completed'],
     }
   },
   created() {

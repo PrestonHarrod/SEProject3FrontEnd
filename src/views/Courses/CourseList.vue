@@ -148,7 +148,6 @@ export default {
   },
    viewCourse(course) {
         let id = course.courseID
-     if(this.user.advisorID != null || this.user.adminID != null)
           this.$router.push({ name: 'view', params: {id: id}})
         .then(() => {
         })

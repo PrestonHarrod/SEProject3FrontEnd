@@ -7,8 +7,8 @@
      <h2><v-btn v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Student</v-btn>
      <v-btn v-else-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToAdd()" color="black" text rounded>Add Student</v-btn></h2>
   <br>
-  <h3><v-btn v-if='user.adminID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToStudentCourses(selected)" color="black" text rounded>View Student's Courses</v-btn>
-  <v-btn v-else-if='user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToStudentCourses(selected)" color="black" text rounded>View Student's Courses</v-btn></h3>
+  <h3><v-btn v-if='user.adminID != null && selected[0] != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToStudentCourses(selected)" color="black" text rounded>View Student's Courses</v-btn>
+  <v-btn v-else-if='user.advisorID != null && selected[0] != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToStudentCourses(selected)" color="black" text rounded>View Student's Courses</v-btn></h3>
      <v-card width="100vw">
        <v-card-title>  
       <v-text-field
@@ -88,6 +88,7 @@ export default {
   },
   methods: {
     goToStudentCourses(selected) {
+      console.log(selected);
       let obj = selected[0]
       let id = obj.studentID
        this.$router.push({ name: 'studentcourselist', params: {id: id}})
