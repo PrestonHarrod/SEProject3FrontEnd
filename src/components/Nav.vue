@@ -3,7 +3,8 @@
     <button v-on:click.prevent="goToHome()">
       <img alt="Vue logo" src="../assets/logo.png" contain height="50" width="80">
     </button>
-    <v-btn text v-if='getAuth() > 0' v-on:click.prevent="goToStudents()">
+    <div v-if="isHome()">
+    <v-btn text v-if='getAuth() > 1' v-on:click.prevent="goToStudents()">
       Students
     </v-btn>
     <v-btn text v-if='getAuth() > 1' v-on:click.prevent="goToAdvisors()">
@@ -24,6 +25,7 @@
     <v-btn v-else text v-on:click.prevent="goToLogin()">
       Logout
     </v-btn>
+    </div>
   </v-app-bar>
 </template>
 
@@ -37,6 +39,9 @@ export default ({
         this.user = Utils.getStore('user');
     },
     methods: {
+      isHome() {
+     return this.$route.name != 'home';
+    },
       getAuth() {
         if(this.user == null)
           return 0;

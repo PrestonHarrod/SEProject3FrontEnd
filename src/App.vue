@@ -1,8 +1,8 @@
 
 <template>
-<v-container fluid>
+<v-container fluid >
   <v-layout>
-      <v-flex>
+      <v-flex >
         <div>
           <div v-if= "isLogin()">
           <Nav/>
