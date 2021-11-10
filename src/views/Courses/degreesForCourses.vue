@@ -4,7 +4,7 @@
     <H1 style="background-color: #811429; color:#f2f2f2">Degree List</H1>
     <br>
     <br>
-     <h2><v-btn v-if='user.adminID != null || user.advisorID != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="addToDegreeCourseList(selected)" color="black" text rounded>Add {{name}} to Degree</v-btn></h2>
+     <h2><v-btn v-if='(user.adminID != null || user.advisorID != null) && selected[0] != null' :style="{left: '50%', transform:'translateX(-50%)'}" @click="addToDegreeCourseList(selected)" color="black" text rounded>Add {{name}} to Degree</v-btn></h2>
   <br>
    <v-card width="100vw">
        <v-card-title>  
