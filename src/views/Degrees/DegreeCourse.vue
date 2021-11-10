@@ -100,7 +100,8 @@ export default {
 
        DegreeCourseServices.deleteDegreeCourse(id)
       .then(() => {
-         location.reload();
+        this.$router.go();
+         //location.reload();
         })
         .catch(error => {
           console.log(error)
