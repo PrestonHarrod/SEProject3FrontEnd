@@ -1,28 +1,29 @@
 <template>
   <div>
-<H1 style="background-color: #811429; color:#f2f2f2">{{degree.degree + ' ' + "'s Courses"}}</H1>
+<H1 style="background-color: #811429; color:#f2f2f2">{{degree.degree + ' ' + " Courses"}}</H1>
 <br>
  <h2><v-btn :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="cancel()" color="black" text rounded>Go Back</v-btn></h2>
-  <v-card width="100vw">
-         <v-simple-table height="1000px" fixed-header>
-          <template v-slot:default>   
-            <thead>
-                <tr>
-                    <th>Course Name</th>
-                    <th>Department</th>
-                    <th>Hours</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="degreecourse in degreecourses" :key="degreecourse.id" :degreecourse="degreecourse">
-                    <td>{{degreecourse.course.name}}</td>
-                    <td>{{degreecourse.course.dept}}</td>
-                    <td>{{degreecourse.course.hours}}</td>      
-                    
-                </tr>
-            </tbody>
-            </template>
-        </v-simple-table>
+ <v-btn v-if="selected[0] != null" color="#E53935" :style="{left: '50%', transform:'translateX(-50%)'}" v-on:click.prevent="deleteDegreeCourse(selected)" text rounded>Remove Course</v-btn>
+
+    <v-card width="100vw">
+       <v-card-title>  
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search by Degree or Department"
+        single-line
+        hide-details
+      ></v-text-field>
+    </v-card-title>
+      <v-data-table
+        v-model="selected"
+        show-select
+        single-select
+        :headers="headers"
+        :items="degreecourses"
+        :items-per-page="25"
+        :search="search">
+      </v-data-table>
     </v-card>
 
   </div>
@@ -42,15 +43,30 @@ export default {
     data() {
         return {
             degree: {},
-            degreecourses: []
+            degreecourses: [],
+            selected: [],
+            search: '',
+            headers: [
+            {
+            text: 'Course Name',
+            align: 'start',
+            filterable: true,
+            value: 'course.name',
+            },
+            {
+            text: 'Department',
+            align: 'start',
+            filterable: true,
+            value: 'course.dept'
+            },
+            {
+            text: 'Hours',
+            align: 'start',
+            filterable: false,
+            value: 'course.hours',
+            },
+            ],
         };
-    },
-    methods: {
-        cancel() {
-      this.$router.push({ name: 'degreelist' })
-    },
-
-        
     },
     async created() {
          await courseServices.getDegree(this.id)
@@ -72,7 +88,26 @@ export default {
                 console.log(error)
             })       
           
-    }
+    },
+    methods: {
+        cancel() {
+      this.$router.push({ name: 'degreelist' })
+    },
+    
+    async deleteDegreeCourse(selected) {
+      let obj = selected[0];
+      let id = obj.id
+
+       DegreeCourseServices.deleteDegreeCourse(id)
+      .then(() => {
+         location.reload();
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+        
+    },
   }
 </script>
 

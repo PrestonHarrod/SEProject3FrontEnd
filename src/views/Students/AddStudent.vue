@@ -34,9 +34,9 @@
               @input="menu = false"
             ></v-date-picker>
             </v-menu>
-            <v-text-field label="advisorID" v-model="student.advisorID" type="text" id="advisorID"/>
+            <v-text-field label="advisorID" placeholder="1" v-model="student.advisorID" type="text" id="advisorID"/>
             <v-text-field label="Major" placeholder="Computer Science" v-model="student.major" type="text" id="major"/>
-            <v-text-field label="Degree" v-model="student.degreeID" type="text" id="degreeID"/>
+            <v-text-field label="Degree" placeholder="1" v-model="student.degreeID" type="text" id="degreeID"/>
             
             
             

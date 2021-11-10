@@ -25,6 +25,7 @@ import ViewSemester from './views/Semesters/SemesterView.vue'
 import semesterEdit from './views/Semesters/SemesterEdit.vue'
 import AddSemester from './views/Semesters/SemesterAdd.vue'
 import DegreeCourse from './views/Degrees/DegreeCourse.vue'
+import DegreeForCourse from './views/Courses/degreesForCourses.vue'
 import StudentCourseList from './views/Students/StudentCourseList.vue'
 import StudentCourseListEdit from './views/Students/StudentCourseEdit.vue'
 
@@ -159,6 +160,12 @@ export default new Router({
         path: "/api/degreecourse/:id",
         name: "degreecourse",
         component: DegreeCourse,
+        props: true
+      },
+      {
+        path: "/api/degreeforcourse/:id",
+        name: "degreeforcourse",
+        component: DegreeForCourse,
         props: true
       },
       {
