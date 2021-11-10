@@ -11,7 +11,7 @@
   
   <h4><v-btn v-if="user.studentID != null" :style="{left: '50%', transform:'translateX(-50%)'}" @click="addToStudentCourseList(selected, user.studentID)" color="black" text rounded>Register Course</v-btn></h4>
 
-  <h4><v-btn v-if="selected[0] != null" :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToDegreeSelect(selected)" color="black" text rounded>Add Course to Degree</v-btn></h4>
+  <h4><v-btn v-if="(user.advisorID != null || user.adminID != null) && selected[0] != null" :style="{left: '50%', transform:'translateX(-50%)'}" @click="goToDegreeSelect(selected)" color="black" text rounded>Add Course to Degree</v-btn></h4>
     
     <v-card width="100vw">
        <v-card-title>

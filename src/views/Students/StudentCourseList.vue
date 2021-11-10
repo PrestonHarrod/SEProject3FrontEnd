@@ -104,15 +104,25 @@ export default {
         if(confirm("Do you really want to delete?")){
            courseServices.deleteStudentCourse(id)
       .then(() => {
-         this.$router.push({ name: 'courses' }) 
-        })
-       
-        
+         this.$router.go()
+        })  
         .catch(error => {
           console.log(error)
         })
       }
       }
+      else if((this.user.adminID != null || this.user.advisorID != null) && obj.status == "In Progress") {
+        if(confirm("Do you really want to delete?")){
+           courseServices.deleteStudentCourse(id)
+      .then(() => {
+         this.$router.go()
+        })  
+        .catch(error => {
+          console.log(error)
+        })
+      }
+      }
+
       else {
           alert("ERROR: Cannot remove course once start date has passed. Contact Registrar's Office for further assistance.");
       }
