@@ -4,8 +4,8 @@
 <v-app>
 <v-form>
         <v-col>
-          <v-text-field label="Course Name" placeholder="Course Name" v-model="course.name" type="text" id="name" />
-          <v-text-field label="Semester ID" placeholder="" v-model="course.semesterID" type="text" id="semesterID"/>
+          <v-text-field label="Course Name" placeholder="Software Engineering" v-model="course.name" type="text" id="name" />
+          <v-text-field label="Semester ID" placeholder="1" v-model="course.semesterID" type="text" id="semesterID"/>
           <v-text-field label="Dept" placeholder="CMCS" v-model="course.dept" type="text" id="courseDept"/>
           <v-text-field label="Number" placeholder="CMCS-0000" v-model="course.courseNum" type="text" id="courseNumber"/>
           <v-select id='hours' v-model="course.hours"

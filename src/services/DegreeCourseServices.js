@@ -24,7 +24,8 @@ export default {
     return apiClient.delete("degreecourses?degreeID=" + id);
   },
   deleteDegreeCourse(id) {
-    return apiClient.delete("degreecourses?degreeID=" + id);
+    console.log(id)
+    return apiClient.delete("degreeCourses/" + id);
   }
 
 };

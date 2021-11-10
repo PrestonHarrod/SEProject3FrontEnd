@@ -79,7 +79,13 @@ export default {
     return apiClient.delete("semesters/" + semesterID);
   },
   getDegreeCourse() {
-    return apiClient.get('degreecourses/')
+    return apiClient.get('degreeCourses/');
+  },
+  deleteDegreeCourse(degreeCourseID) {
+    return apiClient.delete('degreeCourses/', degreeCourseID);
+  },
+  addCourseToDegreeList(degreeCourseList) {
+    return apiClient.post("degreeCourses/", degreeCourseList);
   },
   addCourseToStudentList(studentCourseList) {
     return apiClient.post("studentCourses/", studentCourseList);
